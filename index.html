@@ -692,6 +692,84 @@ tbody tr:last-child td {
     font-size: 12px;
 }
 
+
+/* =================================
+   FULL-SCREEN FILE VIEWER
+================================= */
+.file-viewer-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    background: #07101f;
+    flex-direction: column;
+}
+.file-viewer-overlay.active {
+    display: flex;
+}
+.file-viewer-toolbar {
+    min-height: 68px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 12px 20px;
+    background: #0f172a;
+    border-bottom: 1px solid rgba(255,255,255,.12);
+}
+.file-viewer-heading {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+.file-viewer-heading strong {
+    color: #f1f5f9;
+    font-size: 14px;
+}
+.file-viewer-heading small {
+    color: #91a0b9;
+    font-size: 10px;
+}
+.file-viewer-frame {
+    display: block;
+    width: 100%;
+    height: 100%;
+    flex: 1;
+    min-height: 0;
+    border: 0;
+    background: #fff;
+}
+.close-file {
+    flex-shrink: 0;
+    border: 1px solid rgba(255,255,255,.18);
+    border-radius: 8px;
+    padding: 11px 16px;
+    background: #a92e3b;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: .4px;
+    cursor: pointer;
+}
+.close-file:hover {
+    background: #d13c4b;
+}
+@media(max-width:600px) {
+    .file-viewer-toolbar {
+        min-height: 60px;
+        padding: 10px 12px;
+    }
+    .file-viewer-heading strong {
+        font-size: 12px;
+    }
+    .close-file {
+        padding: 10px 11px;
+        font-size: 10px;
+    }
+}
+
 .hidden {
     display: none !important;
 }
@@ -1513,35 +1591,10 @@ tbody tr:last-child td {
 
                     </div>
 
-                    <div class="panel-title">
-                        LAYAR KACA PRATINJAU
-                    </div>
-
-                    <div id="viewerEmpty" class="viewer-empty">
-
-                        <div>
-
-                            <div style="font-size:35px;margin-bottom:12px">
-                                📂
-                            </div>
-
-                            <strong>PRATINJAU DOKUMEN</strong>
-
-                            <p style="margin-top:8px">
-                                Pilih tombol Buka Berkas untuk
-                                menampilkan dokumen di area ini.
-                            </p>
-
-                        </div>
-
-                    </div>
-
-                    <iframe
-                        id="fileViewer"
-                        class="viewer hidden"
-                        title="Pratinjau Dokumen"
-                        allowfullscreen
-                    ></iframe>
+                    <p style="margin-top:12px;font-size:10px;color:#91a0b9">
+                        Pilih Buka Berkas untuk membuka dokumen dalam layar penuh.
+                        Gunakan tombol CLOSE FILE untuk kembali ke Cloud Storage.
+                    </p>
 
                     <p style="margin-top:12px;font-size:10px">
                         Catatan: Dokumen harus menggunakan
@@ -1556,7 +1609,27 @@ tbody tr:last-child td {
 
         </div>
 
-    </main>
+    
+    <!-- FULL-SCREEN FILE VIEWER -->
+    <div id="fileViewerOverlay" class="file-viewer-overlay" aria-hidden="true">
+        <div class="file-viewer-toolbar">
+            <div class="file-viewer-heading">
+                <strong id="fileViewerTitle">Pratinjau Dokumen</strong>
+                <small>PORTAL PUSAT • CLOUD STORAGE</small>
+            </div>
+            <button type="button" class="close-file" id="closeFileButton">
+                ✕ CLOSE FILE
+            </button>
+        </div>
+        <iframe
+            id="fileViewer"
+            class="file-viewer-frame"
+            title="Pratinjau Dokumen"
+            allowfullscreen
+        ></iframe>
+    </div>
+
+</main>
 
 </div>
 
@@ -1824,95 +1897,70 @@ document.querySelectorAll("[data-external]")
 
 
 /* =================================
-   7. FILE CLOUD VIEWER
+   7. FULL-SCREEN FILE CLOUD VIEWER
 ================================= */
 
-const fileViewer =
-    document.getElementById("fileViewer");
+const fileViewer = document.getElementById("fileViewer");
+const fileViewerOverlay = document.getElementById("fileViewerOverlay");
+const fileViewerTitle = document.getElementById("fileViewerTitle");
+const closeFileButton = document.getElementById("closeFileButton");
 
-const viewerEmpty =
-    document.getElementById("viewerEmpty");
+function closeFileViewer() {
+    fileViewerOverlay.classList.remove("active");
+    fileViewerOverlay.setAttribute("aria-hidden", "true");
+    fileViewer.src = "about:blank";
+}
 
+closeFileButton.addEventListener("click", closeFileViewer);
 
-document.querySelectorAll(".open-file")
-    .forEach(button => {
+document.addEventListener("keydown", event => {
+    if (event.key === "Escape" && fileViewerOverlay.classList.contains("active")) {
+        closeFileViewer();
+    }
+});
 
-        button.addEventListener("click", () => {
+document.querySelectorAll(".open-file").forEach(button => {
+    button.addEventListener("click", () => {
+        const fileKey = button.dataset.file;
+        const file = FILES[fileKey];
 
-            const fileKey =
-                button.dataset.file;
+        if (!file || !file.url || !file.url.trim()) {
+            alert(
+                "URL " + (file ? file.name : "dokumen") +
+                " belum diatur pada konfigurasi FILES."
+            );
+            return;
+        }
 
-            const file =
-                FILES[fileKey];
+        let previewUrl = "";
 
-            if (!file || !file.url.trim()) {
+        try {
+            const originalUrl = new URL(file.url);
 
-                alert(
-                    "URL " + file.name +
-                    " belum diatur pada konfigurasi FILES."
-                );
-
-                return;
+            if (originalUrl.protocol !== "https:" && originalUrl.protocol !== "http:") {
+                throw new Error("URL tidak valid");
             }
 
-            let previewUrl = "";
-
-            try {
-
-                const originalUrl =
-                    new URL(file.url);
-
-                if (
-                    originalUrl.protocol !== "https:" &&
-                    originalUrl.protocol !== "http:"
-                ) {
-                    throw new Error("URL tidak valid");
-                }
-
-                if (file.type === "pdf") {
-
-                    // PDF ditampilkan langsung
-                    previewUrl =
-                        originalUrl.href;
-
-                } else if (file.type === "office") {
-
-                    // Excel dan Word melalui Microsoft Viewer
-                    previewUrl =
-                        "https://view.officeapps.live.com/op/embed.aspx?src=" +
-                        encodeURIComponent(originalUrl.href);
-
-                } else {
-
-                    throw new Error("Format tidak didukung");
-
-                }
-
-            } catch (error) {
-
-                alert(
-                    "URL dokumen tidak valid atau format tidak didukung."
-                );
-
-                return;
+            if (file.type === "pdf") {
+                previewUrl = originalUrl.href;
+            } else if (file.type === "office") {
+                previewUrl =
+                    "https://view.officeapps.live.com/op/embed.aspx?src=" +
+                    encodeURIComponent(originalUrl.href);
+            } else {
+                throw new Error("Format tidak didukung");
             }
+        } catch (error) {
+            alert("URL dokumen tidak valid atau format tidak didukung.");
+            return;
+        }
 
-            // Tampilkan dokumen pada iframe
-            fileViewer.src = previewUrl;
-
-            viewerEmpty.classList.add("hidden");
-
-            fileViewer.classList.remove("hidden");
-
-            // Arahkan scroll ke pratinjau
-            fileViewer.scrollIntoView({
-                behavior: "smooth",
-                block: "center"
-            });
-
-        });
-
+        fileViewerTitle.textContent = file.name;
+        fileViewer.src = previewUrl;
+        fileViewerOverlay.classList.add("active");
+        fileViewerOverlay.setAttribute("aria-hidden", "false");
     });
+});
 
 
 /* =================================
