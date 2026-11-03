@@ -2411,6 +2411,14 @@ document.querySelectorAll(".open-file").forEach(button => {
 const DOCUMENT_LIBRARIES = {
     sop: {
         categories: [
+            { id: "uud", label: "Undang-Undang (UUD)", files: [
+                {
+                    title: "Undang-Undang MABES POLRI",
+                    kind: "gdocs",
+                    meta: "Google Docs • Dokumen Undang-Undang",
+                    url: "https://docs.google.com/document/d/1MfWb8SDftVyVBa6oet_MJci4dAugrQqnI_Ywt6EaH4U/preview"
+                }
+            ]},
             { id: "kedisiplinan", label: "SOP Kedisiplinan", files: [
                 { title: "SOP Kedisiplinan", kind: "text", meta: "Pedoman internal • Dokumen teks", content: `
                     <h2>STANDAR OPERASIONAL PROSEDUR</h2>
@@ -2589,7 +2597,7 @@ function openInlineDocument(libraryKey, file) {
     previewHost.appendChild(empty);
 }
 
-renderDocumentLibrary("sop", "kedisiplinan");
+renderDocumentLibrary("sop", "uud");
 renderDocumentLibrary("arsip", "surat-usulan");
 renderDocumentLibrary("cloud", "pdf");
 
