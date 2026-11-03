@@ -495,6 +495,34 @@ body {
 .home-clock { margin-top:12px; padding:12px; border-radius:8px; background:rgba(5,13,27,.35); }
 .home-clock span,.home-clock small { display:block; color:#8fa2bd; font-size:8px; letter-spacing:1px; }
 .home-clock strong { display:block; margin:6px 0; color:var(--gold); font-size:22px; font-variant-numeric:tabular-nums; }
+.home-operations-grid { display:grid; grid-template-columns:1.05fr 1fr 1fr; gap:13px; margin:0 0 20px; }
+.home-operations-grid .panel { min-width:0; min-height:245px; margin:0; padding:16px; }
+.home-panel-heading { display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:13px; }
+.home-panel-heading .panel-title { margin:4px 0 0; }
+.calendar-controls { display:flex; gap:5px; }
+.calendar-controls button { width:26px; height:26px; border:1px solid var(--border); border-radius:6px; background:#172944; color:var(--gold); cursor:pointer; font-size:17px; }
+.calendar-month { margin:4px 0 10px; color:#e5ebf5; font-size:11px; font-weight:800; text-transform:capitalize; }
+.calendar-grid { display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); gap:4px; text-align:center; }
+.calendar-cell { display:grid; place-items:center; min-height:25px; border-radius:6px; color:#aebbd0; font-size:9px; }
+.calendar-cell.weekday { min-height:20px; color:#7286a3; font-size:8px; font-weight:800; }
+.calendar-cell.today { background:rgba(214,182,108,.18); outline:1px solid rgba(214,182,108,.6); color:var(--gold); font-weight:900; }
+.calendar-cell.blank { visibility:hidden; }
+.calendar-note { display:flex; align-items:center; gap:7px; margin-top:10px; color:#9aabc2; font-size:8px; }
+.calendar-today-dot,.notification-dot { width:7px; height:7px; flex-shrink:0; border-radius:50%; background:var(--gold); }
+.calendar-empty-note { margin-top:9px; padding-top:9px; border-top:1px solid var(--border); color:#8294ae; font-size:9px; }
+.home-mini-status { color:#86cba5; font-size:8px; font-weight:800; letter-spacing:.8px; }
+.home-empty-state { display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:150px; text-align:center; }
+.home-empty-icon { display:grid; place-items:center; width:38px; height:38px; margin-bottom:9px; border-radius:50%; background:rgba(214,182,108,.1); color:var(--gold); font-size:21px; }
+.home-empty-state strong { color:#dce5f4; font-size:10px; }
+.home-empty-state p { max-width:230px; margin-top:6px; color:#8fa1bb; font-size:9px; line-height:1.7; }
+.home-notification-count { display:grid; place-items:center; min-width:24px; height:24px; padding:0 6px; border-radius:12px; background:rgba(214,182,108,.13); color:var(--gold); font-size:10px; font-weight:900; }
+.home-notification-item { display:flex; align-items:flex-start; gap:10px; padding:12px 0; border-top:1px solid var(--border); }
+.home-notification-item .notification-dot { margin-top:4px; }
+.home-notification-item .notification-dot.muted { background:#657792; }
+.home-notification-item strong { display:block; color:#dce5f4; font-size:10px; }
+.home-notification-item p { margin-top:4px; color:#8fa1bb; font-size:9px; line-height:1.7; }
+.home-notification-foot { margin-top:10px; padding-top:9px; border-top:1px solid var(--border); color:#7286a3; font-size:8px; line-height:1.6; }
+
 @media(max-width:850px) { .home-hero-emblem { min-width:120px; } .home-emblem-ring { width:105px;height:105px; } .home-service-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
 @media(max-width:620px) { .home-hero { padding:23px 20px 42px; } .home-hero-emblem { display:none; } .home-lower-grid { grid-template-columns:1fr; } .home-section-hint { display:none; } }
 .dashboard-overview {
@@ -1768,7 +1796,28 @@ tbody tr:last-child td {
                         <div class="home-clock"><span>WAKTU INDONESIA BARAT</span><strong id="homeClock">--:--:-- WIB</strong><small id="homeDate">Memuat tanggal...</small></div>
                     </div>
                 </div>
-            </section>
+            
+                <div class="home-section-heading home-extra-heading"><div><span class="home-section-kicker">COMMAND CENTER</span><h3>Aktivitas & Agenda</h3></div><span class="home-section-hint">Informasi operasional portal</span></div>
+                <div class="home-operations-grid">
+                    <div class="panel home-calendar-panel">
+                        <div class="home-panel-heading"><div><span class="home-section-kicker">SCHEDULE</span><div class="panel-title">Kalender Agenda</div></div><div class="calendar-controls"><button type="button" id="calendarPrev" aria-label="Bulan sebelumnya">‹</button><button type="button" id="calendarNext" aria-label="Bulan berikutnya">›</button></div></div>
+                        <div class="calendar-month" id="calendarMonth">Memuat kalender...</div>
+                        <div class="calendar-grid" id="calendarGrid"></div>
+                        <div class="calendar-note"><span class="calendar-today-dot"></span> Hari ini</div>
+                        <p class="calendar-empty-note" id="calendarAgendaNote">Belum ada agenda yang diterbitkan.</p>
+                    </div>
+                    <div class="panel home-activity-panel">
+                        <div class="home-panel-heading"><div><span class="home-section-kicker">RECENT LOGS</span><div class="panel-title">Aktivitas Terbaru</div></div><span class="home-mini-status">LIVE VIEW</span></div>
+                        <div class="home-empty-state"><span class="home-empty-icon">◷</span><strong>Belum ada aktivitas tercatat</strong><p>Riwayat aktivitas akan ditampilkan setelah pencatatan log diaktifkan melalui Dashboard Admin.</p></div>
+                    </div>
+                    <div class="panel home-notification-panel">
+                        <div class="home-panel-heading"><div><span class="home-section-kicker">NOTIFICATION CENTER</span><div class="panel-title">Pusat Notifikasi</div></div><span class="home-notification-count" id="homeNotificationCount">0</span></div>
+                        <div class="home-notification-item"><span class="notification-dot"></span><div><strong>Pengumuman resmi</strong><p id="homeNotificationText">Menunggu informasi terbaru dari Dashboard Admin.</p></div></div>
+                        <div class="home-notification-item"><span class="notification-dot muted"></span><div><strong>Agenda komunitas</strong><p>Belum ada agenda yang diterbitkan.</p></div></div>
+                        <div class="home-notification-foot">Notifikasi mengikuti informasi yang dipublikasikan pada portal.</div>
+                    </div>
+                </div>
+</section>
 
             <!-- =================================
                  ROSTER ANGGOTA
@@ -2117,6 +2166,10 @@ async function loadAnnouncements() {
     }
 
     updateDashboardStats(data ? data.length : 0);
+    const notificationCount = document.getElementById("homeNotificationCount");
+    const notificationText = document.getElementById("homeNotificationText");
+    if (notificationCount) notificationCount.textContent = data ? data.length : 0;
+    if (notificationText) notificationText.textContent = data && data.length ? (data[0].title || "Ada pengumuman baru di portal.") : "Belum ada pengumuman yang dipublikasikan.";
 
     if (!data || data.length === 0) {
         container.innerHTML = '<div class="announcement-empty"><strong>Belum ada pengumuman</strong><p>Pengumuman resmi akan muncul di sini setelah diterbitkan melalui Dashboard Admin.</p></div>';
@@ -2851,6 +2904,29 @@ renderDocumentLibrary("cloud", "pdf");
 ================================= */
 
 // Muat pengumuman dari database Supabase
+
+let calendarCursor = new Date();
+function renderHomeCalendar() {
+    const monthNode = document.getElementById("calendarMonth");
+    const gridNode = document.getElementById("calendarGrid");
+    if (!monthNode || !gridNode) return;
+    const year = calendarCursor.getFullYear();
+    const month = calendarCursor.getMonth();
+    monthNode.textContent = new Intl.DateTimeFormat("id-ID",{month:"long",year:"numeric",timeZone:"Asia/Jakarta"}).format(new Date(year,month,1));
+    const weekdays = ["MIN","SEN","SEL","RAB","KAM","JUM","SAB"];
+    const firstDay = new Date(year,month,1).getDay();
+    const daysInMonth = new Date(year,month+1,0).getDate();
+    const now = new Date();
+    const todayParts = new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Jakarta",year:"numeric",month:"2-digit",day:"2-digit"}).format(now).split("-");
+    const today = {year:Number(todayParts[0]),month:Number(todayParts[1])-1,day:Number(todayParts[2])};
+    gridNode.replaceChildren();
+    weekdays.forEach(day => { const el=document.createElement("div"); el.className="calendar-cell weekday"; el.textContent=day; gridNode.appendChild(el); });
+    for(let i=0;i<firstDay;i++){const el=document.createElement("div");el.className="calendar-cell blank";gridNode.appendChild(el);}
+    for(let day=1;day<=daysInMonth;day++){const el=document.createElement("div");el.className="calendar-cell"+(year===today.year&&month===today.month&&day===today.day?" today":"");el.textContent=day;gridNode.appendChild(el);}
+}
+document.getElementById("calendarPrev")?.addEventListener("click",()=>{calendarCursor.setMonth(calendarCursor.getMonth()-1);renderHomeCalendar();});
+document.getElementById("calendarNext")?.addEventListener("click",()=>{calendarCursor.setMonth(calendarCursor.getMonth()+1);renderHomeCalendar();});
+renderHomeCalendar();
 
 function updateHomeClock() {
     const now = new Date();
