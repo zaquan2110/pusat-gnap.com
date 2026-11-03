@@ -3005,6 +3005,24 @@ renderDocumentLibrary("sop", "uud");
 renderDocumentLibrary("arsip", "surat-usulan");
 renderDocumentLibrary("cloud", "pdf");
 
+/* GNAP ADMIN PUBLIC CONTENT */
+const PUBLIC_MODULES=["blacklist","sop","arsip","cloud","struktur","awards","agenda","notifications"];
+function safePublicUrl(value){try{const u=new URL(value);return ["https:","http:"].includes(u.protocol)?u.href:"";}catch(e){return "";}}
+function renderPublicModule(module,items){
+ const page=document.getElementById("page-"+module);if(!page)return;
+ let host=document.getElementById("public-content-"+module);
+ if(!host){host=document.createElement("div");host.id="public-content-"+module;page.appendChild(host);}
+ host.replaceChildren();
+ if(module==="blacklist"){const tbody=page.querySelector("table tbody");if(tbody&&items.length){tbody.replaceChildren();items.forEach((item,index)=>{const tr=document.createElement("tr");[String(index+1),item.title,item.body||item.category||"—",item.created_at?new Date(item.created_at).toLocaleDateString("id-ID"):"—"].forEach(v=>{const td=document.createElement("td");td.textContent=v;tr.appendChild(td);});tbody.appendChild(tr);});}return;}
+ if(!items.length)return;
+ const panel=document.createElement("div");panel.className="panel";const h=document.createElement("div");h.className="panel-title";h.textContent=({sop:"DOKUMEN PERATURAN & SOP",arsip:"ARSIP SURAT DAN KEPUTUSAN",cloud:"BERKAS DIGITAL",struktur:"DATA STRUKTUR ORGANISASI",awards:"PENGHARGAAN TERBIT",agenda:"AGENDA KEGIATAN",notifications:"NOTIFIKASI RESMI"})[module]||"INFORMASI";panel.appendChild(h);
+ const grid=document.createElement("div");grid.style.cssText="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px";
+ items.forEach(item=>{const card=document.createElement("article");card.style.cssText="padding:15px;border:1px solid rgba(255,255,255,.1);border-radius:9px;background:rgba(5,13,27,.28)";const title=document.createElement("strong");title.textContent=item.title;title.style.cssText="display:block;color:#e8edf7;font-size:13px;margin-bottom:7px";card.appendChild(title);if(item.category){const cat=document.createElement("small");cat.textContent=item.category;cat.style.cssText="display:block;color:#d6b66c;margin-bottom:7px";card.appendChild(cat);}if(item.body){const body=document.createElement("p");body.textContent=item.body;body.style.cssText="white-space:pre-wrap;overflow-wrap:anywhere";card.appendChild(body);}const url=safePublicUrl(item.link_url);if(url){const link=document.createElement("a");link.href=url;link.target="_blank";link.rel="noopener noreferrer";link.textContent="BUKA / LIHAT FILE ↗";link.style.cssText="display:inline-block;margin-top:12px;color:#d6b66c;font-size:10px;font-weight:800";card.appendChild(link);}grid.appendChild(card);});
+ panel.appendChild(grid);host.appendChild(panel);
+ if(module==="notifications"){const all=document.getElementById("allNotificationList");if(all){all.replaceChildren();items.forEach(item=>{const article=document.createElement("article");article.className="announcement-item";const title=document.createElement("h3");title.textContent=item.title;const body=document.createElement("p");body.textContent=item.body||"";article.append(title,body);all.appendChild(article);});}}
+}
+async function loadGNAPPublicContent(){const {data,error}=await supabaseClient.from("gnap_public_content").select("id,module,title,category,body,link_url,sort_order,created_at").order("sort_order",{ascending:true}).order("created_at",{ascending:false});if(error){console.info("Konten portal admin belum aktif. Jalankan SQL setup terlebih dahulu.",error.message);return;}const grouped=Object.fromEntries(PUBLIC_MODULES.map(m=>[m,[]]));(data||[]).forEach(item=>{if(grouped[item.module])grouped[item.module].push(item);});PUBLIC_MODULES.forEach(m=>renderPublicModule(m,grouped[m]));}
+
 /* =================================
    8. ERROR HANDLING DASAR
 ================================= */
@@ -3047,6 +3065,7 @@ setInterval(updateHomeClock,1000);
 
 updateDashboardStats();
 loadAnnouncements();
+loadGNAPPublicContent();
 
 // Pastikan halaman awal tersedia
 if (!document.getElementById("page-beranda")) {
