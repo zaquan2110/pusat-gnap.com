@@ -953,6 +953,38 @@ tbody tr:last-child td {
     gap: 9px;
     margin-bottom: 14px;
 }
+.document-filter-bar {
+    display: grid;
+    grid-template-columns: minmax(180px, 1.5fr) repeat(4, minmax(105px, 1fr));
+    gap: 8px;
+    margin-bottom: 12px;
+    padding: 11px;
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 9px;
+    background: #111e32;
+}
+.document-filter-search, .document-filter select {
+    width: 100%; min-width: 0; min-height: 36px;
+    border: 1px solid rgba(255,255,255,.13); border-radius: 6px;
+    padding: 7px 9px; outline: none; background: #0b1628;
+    color: #e5edf8; font: inherit; font-size: 10px;
+}
+.document-filter-search:focus, .document-filter select:focus { border-color: rgba(77,145,225,.8); }
+.document-filter { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.document-filter > span { color: #91a5c0; font-size: 8px; font-weight: 900; letter-spacing: .6px; }
+.document-filtered-list { display: flex; flex-direction: column; gap: 9px; }
+.document-file-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
+.document-file-tag {
+    display: inline-flex; align-items: center; border: 1px solid rgba(123,153,190,.25);
+    border-radius: 20px; padding: 3px 7px; background: rgba(87,112,148,.13);
+    color: #b8c9df; font-size: 8px; font-weight: 800;
+}
+.document-file-tag.is-active { border-color: rgba(56,189,128,.35); background: rgba(20,91,69,.25); color: #8be0b8; }
+@media(max-width:1100px) {
+    .document-filter-bar { grid-template-columns: repeat(2, minmax(0,1fr)); }
+    .document-filter-search { grid-column: 1 / -1; }
+}
+@media(max-width:520px) { .document-filter-bar { grid-template-columns: 1fr 1fr; padding: 8px; } }
 .document-file-card {
     display: flex;
     align-items: center;
@@ -2488,10 +2520,8 @@ function renderDocumentLibrary(libraryKey, selectedCategoryId) {
     const countHost = document.getElementById(prefix + "FileCount");
     const previewHost = document.getElementById(prefix + "Preview");
     if (!categoryHost || !fileHost || !countHost || !previewHost) return;
-
     const category = library.categories.find(item => item.id === selectedCategoryId) || library.categories[0];
     categoryHost.replaceChildren();
-
     library.categories.forEach(item => {
         const button = document.createElement("button");
         button.type = "button";
@@ -2505,17 +2535,71 @@ function renderDocumentLibrary(libraryKey, selectedCategoryId) {
         button.addEventListener("click", () => renderDocumentLibrary(libraryKey, item.id));
         categoryHost.appendChild(button);
     });
-
     fileHost.replaceChildren();
-    countHost.textContent = category.files.length + " DOKUMEN";
-
-    if (!category.files.length) {
-        const empty = document.createElement("div");
-        empty.className = "document-empty-list";
-        empty.innerHTML = "<strong>BELUM ADA FILE</strong><p>Belum ada dokumen pada kategori ini. File akan muncul di sini setelah ditambahkan melalui pengelolaan dokumen.</p>";
-        fileHost.appendChild(empty);
-    } else {
-        category.files.forEach((file, index) => {
+    const files = category.files.map(file => ({
+        ...file,
+        docYear: String(file.year || (file.meta || "").match(/20\d{2}/)?.[0] || "2026"),
+        docStatus: file.status || "Aktif",
+        docUnit: file.unit || "MABES",
+        docClass: file.classification || "Internal",
+        docType: file.documentType || category.label
+    }));
+    const filterBar = document.createElement("div");
+    filterBar.className = "document-filter-bar";
+    const search = document.createElement("input");
+    search.type = "search";
+    search.className = "document-filter-search";
+    search.placeholder = "Cari nama, nomor, atau keterangan file...";
+    search.setAttribute("aria-label", "Cari dokumen");
+    const makeFilter = (labelText, key, allLabel) => {
+        const wrap = document.createElement("label");
+        wrap.className = "document-filter";
+        const label = document.createElement("span");
+        label.textContent = labelText;
+        const select = document.createElement("select");
+        select.setAttribute("aria-label", labelText);
+        const all = document.createElement("option");
+        all.value = "";
+        all.textContent = allLabel;
+        select.appendChild(all);
+        [...new Set(files.map(file => file[key]).filter(Boolean))].sort().forEach(value => {
+            const option = document.createElement("option");
+            option.value = value;
+            option.textContent = value;
+            select.appendChild(option);
+        });
+        wrap.append(label, select);
+        return { wrap, select };
+    };
+    const yearFilter = makeFilter("TAHUN", "docYear", "Semua Tahun");
+    const statusFilter = makeFilter("STATUS", "docStatus", "Semua Status");
+    const unitFilter = makeFilter("UNIT", "docUnit", "Semua Unit");
+    const classFilter = makeFilter("KLASIFIKASI", "docClass", "Semua Klasifikasi");
+    filterBar.append(search, yearFilter.wrap, statusFilter.wrap, unitFilter.wrap, classFilter.wrap);
+    fileHost.appendChild(filterBar);
+    const list = document.createElement("div");
+    list.className = "document-filtered-list";
+    fileHost.appendChild(list);
+    const renderFiles = () => {
+        const query = search.value.trim().toLocaleLowerCase("id");
+        const filtered = files.filter(file => {
+            const haystack = [file.title, file.meta, file.docYear, file.docStatus, file.docUnit, file.docClass, file.docType, file.number].join(" ").toLocaleLowerCase("id");
+            return (!query || haystack.includes(query))
+                && (!yearFilter.select.value || file.docYear === yearFilter.select.value)
+                && (!statusFilter.select.value || file.docStatus === statusFilter.select.value)
+                && (!unitFilter.select.value || file.docUnit === unitFilter.select.value)
+                && (!classFilter.select.value || file.docClass === classFilter.select.value);
+        });
+        countHost.textContent = filtered.length + " / " + files.length + " DOKUMEN";
+        list.replaceChildren();
+        if (!filtered.length) {
+            const empty = document.createElement("div");
+            empty.className = "document-empty-list";
+            empty.innerHTML = "<strong>DOKUMEN TIDAK DITEMUKAN</strong><p>Coba ubah kata pencarian atau pilihan filter.</p>";
+            list.appendChild(empty);
+            return;
+        }
+        filtered.forEach(file => {
             const card = document.createElement("article");
             card.className = "document-file-card";
             const icon = document.createElement("div");
@@ -2526,18 +2610,30 @@ function renderDocumentLibrary(libraryKey, selectedCategoryId) {
             const title = document.createElement("strong");
             title.textContent = file.title;
             const meta = document.createElement("small");
-            meta.textContent = file.meta || "Dokumen resmi";
-            info.append(title, meta);
+            meta.textContent = file.number ? file.number + " • " + (file.meta || "Dokumen resmi") : (file.meta || "Dokumen resmi");
+            const tags = document.createElement("div");
+            tags.className = "document-file-tags";
+            [file.docType, file.docYear, file.docUnit, file.docClass, file.docStatus].forEach((value, index) => {
+                const tag = document.createElement("span");
+                tag.className = "document-file-tag" + (index === 4 && value.toLowerCase() === "aktif" ? " is-active" : "");
+                tag.textContent = value;
+                tags.appendChild(tag);
+            });
+            info.append(title, meta, tags);
             const open = document.createElement("button");
             open.type = "button";
             open.className = "document-open-btn";
             open.textContent = "OPEN FILE";
             open.addEventListener("click", () => openInlineDocument(libraryKey, file));
             card.append(icon, info, open);
-            fileHost.appendChild(card);
+            list.appendChild(card);
         });
-    }
-
+    };
+    [search, yearFilter.select, statusFilter.select, unitFilter.select, classFilter.select].forEach(control => {
+        control.addEventListener("input", renderFiles);
+        control.addEventListener("change", renderFiles);
+    });
+    renderFiles();
     previewHost.innerHTML = '<div class="document-preview-empty"><span class="preview-icon">▤</span><strong>PRATINJAU DOKUMEN</strong><p>Pilih file dari daftar di atas, lalu tekan OPEN FILE untuk membaca dokumen di sini.</p></div>';
 }
 
