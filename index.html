@@ -505,6 +505,88 @@ body {
 }
 
 /* =================================
+   PAPAN PENGUMUMAN
+================================= */
+
+.announcement-panel {
+    margin-bottom: 18px;
+}
+
+.announcement-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.announcement-header .panel-title {
+    margin-bottom: 0;
+}
+
+.announcement-live {
+    color: #7bdba5;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+.announcement-empty {
+    border: 1px dashed rgba(214,182,108,.28);
+    border-radius: 9px;
+    padding: 20px;
+    text-align: center;
+    background: rgba(255,255,255,.015);
+}
+
+.announcement-empty strong {
+    display: block;
+    color: #dce5f4;
+    font-size: 12px;
+    margin-bottom: 7px;
+}
+
+.announcement-empty p {
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.7;
+}
+
+.announcement-item {
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--gold);
+    border-radius: 8px;
+    padding: 14px 15px;
+    background: #17243b;
+    margin-bottom: 10px;
+}
+
+.announcement-item:last-child {
+    margin-bottom: 0;
+}
+
+.announcement-item h3 {
+    font-size: 13px;
+    margin-bottom: 7px;
+}
+
+.announcement-item p {
+    font-size: 11px;
+    line-height: 1.8;
+    color: #bac6da;
+    white-space: pre-wrap;
+}
+
+.announcement-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 14px;
+    color: var(--muted);
+    font-size: 9px;
+    margin-top: 10px;
+}
+
+/* =================================
    TABEL
 ================================= */
 
@@ -1164,6 +1246,19 @@ tbody tr:last-child td {
                         komunitas.
                     </p>
 
+                </div>
+
+                <div class="panel announcement-panel">
+                    <div class="announcement-header">
+                        <div class="panel-title">PAPAN PENGUMUMAN</div>
+                        <span class="announcement-live">● INFORMASI RESMI</span>
+                    </div>
+                    <div id="announcementList" aria-live="polite">
+                        <div class="announcement-empty">
+                            <strong>Belum ada pengumuman</strong>
+                            <p>Pengumuman resmi dari MABES POLRI akan ditampilkan di bagian ini setelah Dashboard Admin terhubung.</p>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="info-grid">
