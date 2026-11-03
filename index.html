@@ -1732,7 +1732,73 @@ tbody tr:last-child td {
      JAVASCRIPT
 ================================= -->
 
+<!-- Supabase client untuk membaca pengumuman publik -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
+
+/* =================================
+   KONEKSI DATABASE PORTAL PUSAT GNAP
+================================= */
+
+const SUPABASE_URL = "https://gxgbvlxvpokufqsfbpnf.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_fzbR1h1wiIqfgzB0qD328w_ra0AmXnz";
+const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+);
+
+async function loadAnnouncements() {
+    const container = document.getElementById("announcementList");
+    if (!container) return;
+
+    const { data, error } = await supabaseClient
+        .from("announcements")
+        .select("id, title, content, category, created_at")
+        .eq("is_published", true)
+        .order("created_at", { ascending: false })
+        .limit(10);
+
+    if (error) {
+        console.error("Gagal memuat pengumuman:", error.message);
+        container.innerHTML = '<div class="announcement-empty"><strong>Pengumuman belum dapat dimuat</strong><p>Silakan coba muat ulang halaman beberapa saat lagi.</p></div>';
+        return;
+    }
+
+    if (!data || data.length === 0) {
+        container.innerHTML = '<div class="announcement-empty"><strong>Belum ada pengumuman</strong><p>Pengumuman resmi akan muncul di sini setelah diterbitkan melalui Dashboard Admin.</p></div>';
+        return;
+    }
+
+    container.replaceChildren();
+    data.forEach(item => {
+        const article = document.createElement("article");
+        article.className = "announcement-item";
+
+        const heading = document.createElement("h3");
+        heading.textContent = item.title || "Pengumuman";
+
+        const body = document.createElement("p");
+        body.textContent = item.content || "";
+
+        const meta = document.createElement("div");
+        meta.className = "announcement-meta";
+        const category = document.createElement("span");
+        category.textContent = item.category || "INFORMASI";
+        const date = document.createElement("span");
+        date.textContent = item.created_at
+            ? new Date(item.created_at).toLocaleString("id-ID", {
+                dateStyle: "long",
+                timeStyle: "short",
+                timeZone: "Asia/Jakarta"
+              }) + " WIB"
+            : "";
+
+        meta.append(category, date);
+        article.append(heading, body, meta);
+        container.appendChild(article);
+    });
+}
 
 /* =================================
    1. KONFIGURASI LINK EKSTERNAL
@@ -2061,6 +2127,9 @@ document.querySelectorAll(".open-file").forEach(button => {
 /* =================================
    8. ERROR HANDLING DASAR
 ================================= */
+
+// Muat pengumuman dari database Supabase
+loadAnnouncements();
 
 // Pastikan halaman awal tersedia
 if (!document.getElementById("page-beranda")) {
