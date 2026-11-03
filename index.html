@@ -15,11 +15,12 @@
             --text-light: #f8fafc;
             --border-color: #334155;
             --text-muted: #64748b;
+            --folder-bg: #1e293b;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
         body { background-color: var(--bg-dark); color: var(--text-light); height: 100vh; overflow: hidden; display: flex; }
 
-        /* LAYAR KIRI: SIDEBAR (DAFTAR TOMBOL) */
+        /* LAYAR KIRI: SIDEBAR */
         .sidebar {
             width: 310px;
             background-color: var(--sidebar-bg);
@@ -93,7 +94,7 @@
         .ktp-details { font-size: 11px; line-height: 1.4; color: #cbd5e1; }
         .ktp-details strong { color: #fff; font-size: 12px; }
 
-        /* FITUR CARI */
+        /* FITUR CARI TOMBOL */
         .search-container { margin-bottom: 12px; }
         .search-input {
             width: 100%;
@@ -108,7 +109,7 @@
         .search-input::placeholder { color: var(--text-muted); }
         .search-input:focus { border-color: var(--accent-blue); }
 
-        /* SCROLL MENU BUTTONS */
+        /* DAFTAR MENU BUTTONS */
         .menu-scroll {
             flex-grow: 1;
             overflow-y: auto;
@@ -152,6 +153,8 @@
             padding: 30px;
             overflow-y: auto;
             height: 100%;
+            display: flex;
+            flex-direction: column;
         }
         .content-card {
             background-color: var(--sidebar-bg);
@@ -178,63 +181,59 @@
         .table-roster th { background-color: #1e293b; color: #fff; }
         .table-roster td { background-color: #0f172a; }
 
+        /* TAMPILAN FITUR FILE EXPLORER */
+        .file-manager-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+            margin-bottom: 25px;
+        }
+        .file-item {
+            background-color: var(--folder-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 15px;
+            text-align: center;
+            transition: all 0.2s ease;
+        }
+        .file-item:hover { border-color: var(--accent-blue); transform: translateY(-2px); }
+        .file-icon { font-size: 32px; margin-bottom: 8px; }
+        .file-name { font-size: 12px; font-weight: 600; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 4px; }
+        .file-size { font-size: 10px; color: var(--text-muted); margin-bottom: 10px; }
+        .file-actions { display: flex; gap: 5px; justify-content: center; }
+        
+        .btn-file-action { padding: 5px 10px; font-size: 11px; font-weight: bold; border-radius: 4px; border: none; cursor: pointer; text-decoration: none; color: #fff; }
+        .btn-preview { background-color: var(--accent-blue); }
+        .btn-preview:hover { background-color: var(--accent-hover); }
+
+        /* ====== WIDGET FRAME LAYAR PRATINJAU FILE ====== */
+        .preview-frame-container {
+            margin-top: 20px;
+            flex-grow: 1;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background-color: #090d16;
+            display: flex;
+            flex-direction: column;
+            min-height: 450px;
+        }
+        .frame-header {
+            background-color: #1e293b;
+            padding: 10px 15px;
+            font-size: 12px;
+            font-weight: bold;
+            border-bottom: 1px solid var(--border-color);
+            color: #38bdf8;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .frame-body { flex-grow: 1; width: 100%; height: 100%; border: none; background-color: #fff; border-radius: 0 0 8px 8px; }
+
         /* POP-UP LOGIN ADMIN */
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; z-index: 1000; }
         .login-box { background-color: #1e293b; border: 1px solid #ef4444; padding: 25px; border-radius: 8px; width: 300px; text-align: center; }
-        .login-box h3 { font-size: 16px; margin-bottom: 15px; }
+        .login-box h3 { font-size: 16px; margin-bottom: 15px; color: #fff; }
         .login-box input { width: 100%; padding: 8px; margin-bottom: 12px; border-radius: 4px; border: 1px solid var(--border-color); background-color: #0f172a; color: #fff; text-align: center; }
         .login-box button { width: 100%; padding: 8px; background-color: var(--accent-blue); border: none; color: white; font-weight: bold; border-radius: 4px; cursor: pointer; margin-bottom: 8px; }
-        .login-box .btn-close { background-color: #475569; }
-    </style>
-</head>
-<body>
-
-    <!-- LAYAR KIRI -->
-    <div class="sidebar">
-        <!-- LOGO & INSTANSI -->
-        <div class="community-header">
-            <div class="community-logo">
-                <img src="https://placeholder.com" alt="Logo">
-            </div>
-            <div class="community-info">
-                <h2>MABES POLRI</h2>
-                <p>ROBLOX INDONESIA</p>
-            </div>
-        </div>
-
-        <!-- KTP ANGGOTA -->
-        <div class="ktp-card">
-            <div class="ktp-title">KTP ANGGOTA INSTANSI</div>
-            <div class="ktp-body">
-                <div class="ktp-avatar">
-                    <img src="https://placeholder.com" alt="Avatar">
-                </div>
-                <div class="ktp-details">
-                    Nama: <strong>Zaquan2115</strong><br>
-                    Discord: <code>zaquan_dc</code><br>
-                    Jabatan: Co-Owner<br>
-                    NIP: POL-20261103
-                </div>
-            </div>
-        </div>
-        
-        <!-- CARI TOMBOL -->
-        <div class="search-container">
-            <input type="text" class="search-input" id="sidebarSearch" onkeyup="searchMenu()" placeholder="🔍 Cari menu tombol...">
-        </div>
-        
-        <!-- DAFTAR MENU -->
-        <div class="menu-scroll" id="menuList">
-            <div class="category-title">Utama</div>
-            <button class="menu-btn active" onclick="switchTab('beranda', this)">🏠 Beranda Pusat</button>
-            
-            <div class="category-title">Data Personel</div>
-            <button class="menu-btn" onclick="switchTab('roster', this)">👥 Roster Anggota</button>
-            <button class="menu-btn" onclick="switchTab('blacklist', this)">🚫 Daftar Blacklist</button>
-            
-            <div class="category-title">Legalitas & Arsip</div>
-            <button class="menu-btn" onclick="switchTab('aturan', this)">📜 Undang-Undang / SOP</button>
-            <button class="menu-btn" onclick="switchTab('arsip', this)">📂 Arsip Surat SK</button>
-            
-            <div class="category-title">Pelayanan Publik</div>
-            <button class="menu-btn" onclick="openExternal('recruitment')">📩 Formulir Recruitment</button>
