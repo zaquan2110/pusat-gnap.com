@@ -447,37 +447,56 @@ body {
    BERANDA
 ================================= */
 
-.welcome-banner {
-    padding: 32px;
-    border: 1px solid rgba(214,182,108,.25);
-    border-radius: 12px;
-    background:
-        radial-gradient(circle at 90% 20%,rgba(57,119,201,.22),transparent 35%),
-        linear-gradient(120deg,#192b49,#131f38);
-    margin-bottom: 20px;
+.home-hero {
+    position: relative; display: flex; align-items: center; justify-content: space-between; gap: 24px;
+    min-height: 260px; padding: 30px 34px 42px; margin-bottom: 25px; overflow: hidden;
+    border: 1px solid rgba(214,182,108,.28); border-radius: 15px;
+    background: radial-gradient(circle at 78% 45%,rgba(50,105,170,.28),transparent 27%),
+      radial-gradient(circle at 12% 0%,rgba(214,182,108,.10),transparent 35%),
+      linear-gradient(120deg,#1b3152,#101c32 75%);
 }
-
-.welcome-label {
-    color: var(--gold);
-    font-size: 10px;
-    letter-spacing: 2px;
-    font-weight: 800;
-    margin-bottom: 13px;
-}
-
-.welcome-banner h2 {
-    font-size: clamp(20px,3vw,31px);
-    line-height: 1.4;
-    margin-bottom: 12px;
-}
-
-.welcome-banner p {
-    color: #b7c4d9;
-    font-size: 12px;
-    line-height: 1.9;
-    max-width: 700px;
-}
-
+.home-hero:before { content:""; position:absolute; inset:0; opacity:.15; pointer-events:none;
+    background-image:linear-gradient(rgba(255,255,255,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.08) 1px,transparent 1px); background-size:28px 28px; }
+.home-hero-copy { position:relative; z-index:1; max-width:690px; }
+.welcome-label,.home-section-kicker { color:var(--gold); font-size:9px; font-weight:900; letter-spacing:1.8px; }
+.home-kicker { margin:12px 0 7px; color:#9eb1cd; font-size:9px; letter-spacing:1.4px; font-weight:800; }
+.home-hero h2 { margin:0 0 10px; font-size:clamp(22px,3.2vw,35px); line-height:1.22; letter-spacing:.2px; }
+.home-hero h2 span { color:var(--gold); }
+.home-hero p { max-width:620px; color:#b8c7dc; font-size:11px; line-height:1.9; }
+.home-hero-actions { display:flex; align-items:center; gap:16px; flex-wrap:wrap; margin-top:19px; }
+.home-primary-action { padding:11px 15px; border:1px solid rgba(214,182,108,.6); border-radius:7px; background:linear-gradient(120deg,#b89550,#80652f); color:#101827; font-size:9px; font-weight:900; cursor:pointer; }
+.home-primary-action b { margin-left:12px; }
+.home-secure-note { color:#9cacc3; font-size:8px; letter-spacing:1px; font-weight:800; }
+.home-hero-emblem { position:relative; z-index:1; display:flex; flex-direction:column; align-items:center; gap:7px; min-width:170px; color:#dce5f4; font-size:9px; letter-spacing:1.2px; font-weight:900; }
+.home-emblem-ring { width:132px; height:132px; padding:7px; border-radius:50%; border:1px solid rgba(214,182,108,.65); background:rgba(5,13,27,.42); box-shadow:0 0 0 8px rgba(214,182,108,.05),0 0 35px rgba(72,132,201,.18); }
+.home-emblem-ring img { width:100%; height:100%; object-fit:cover; border-radius:50%; }
+.home-hero-emblem small { color:var(--gold); font-size:8px; letter-spacing:2px; }
+.home-hero-foot { position:absolute; bottom:0; left:0; right:0; display:flex; justify-content:space-between; padding:9px 16px; border-top:1px solid rgba(255,255,255,.08); color:#8497b3; font-size:8px; letter-spacing:1.2px; }
+.home-section-heading { display:flex; align-items:end; justify-content:space-between; gap:12px; margin:0 0 12px; }
+.home-section-heading h3 { margin-top:4px; font-size:16px; }
+.home-section-hint { color:var(--muted); font-size:9px; }
+.home-live-pill { color:#85d6a5; font-size:9px; font-weight:800; letter-spacing:.7px; }
+.dashboard-stat { min-height:125px; padding:16px; }
+.dashboard-stat-icon { float:right; color:rgba(214,182,108,.72); font-size:21px; }
+.dashboard-stat strong { clear:both; }
+.dashboard-online { font-size:19px!important; color:#7bdba5!important; }
+.home-service-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:11px; margin-bottom:20px; }
+.home-service-card { display:flex; align-items:center; gap:12px; min-height:75px; padding:13px; text-align:left; border:1px solid var(--border); border-radius:10px; background:linear-gradient(140deg,#172944,#111d33); color:#e2eaf6; cursor:pointer; transition:.18s ease; }
+.home-service-card:hover { transform:translateY(-2px); border-color:rgba(214,182,108,.55); background:#1a2d4b; }
+.home-service-card .service-icon { display:grid; place-items:center; width:37px; height:37px; flex-shrink:0; border-radius:9px; background:rgba(214,182,108,.10); color:var(--gold); font-size:19px; }
+.home-service-card b { display:block; font-size:10px; }
+.home-service-card small { display:block; margin-top:5px; color:#91a2bd; font-size:9px; }
+.home-service-card i { margin-left:auto; color:var(--gold); font-style:normal; }
+.home-lower-grid { display:grid; grid-template-columns:minmax(0,1.4fr) minmax(260px,1fr); gap:14px; align-items:start; }
+.home-lower-grid .panel { margin-bottom:0; }
+.home-info-panel>p { margin:8px 0 12px; }
+.home-info-row { display:flex; align-items:center; justify-content:space-between; gap:10px; padding:10px 0; border-top:1px solid var(--border); color:#bac6da; font-size:10px; }
+.home-info-row button { border:0; background:transparent; color:var(--gold); font-size:9px; font-weight:900; cursor:pointer; }
+.home-clock { margin-top:12px; padding:12px; border-radius:8px; background:rgba(5,13,27,.35); }
+.home-clock span,.home-clock small { display:block; color:#8fa2bd; font-size:8px; letter-spacing:1px; }
+.home-clock strong { display:block; margin:6px 0; color:var(--gold); font-size:22px; font-variant-numeric:tabular-nums; }
+@media(max-width:850px) { .home-hero-emblem { min-width:120px; } .home-emblem-ring { width:105px;height:105px; } .home-service-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media(max-width:620px) { .home-hero { padding:23px 20px 42px; } .home-hero-emblem { display:none; } .home-lower-grid { grid-template-columns:1fr; } .home-section-hint { display:none; } }
 .dashboard-overview {
     display: grid;
     grid-template-columns: repeat(4,minmax(0,1fr));
@@ -1698,112 +1717,57 @@ tbody tr:last-child td {
             ================================== -->
 
             <section class="page active" id="page-beranda">
-
-                <div class="welcome-banner">
-
-                    <div class="welcome-label">
-                        OFFICIAL COMMUNITY PORTAL
-                    </div>
-
-                    <h2>
-                        SELAMAT DATANG DI
-                        PORTAL PUSAT MABES POLRI
-                    </h2>
-
-                    <p>
-                        Selamat datang di Portal Pusat GNAP.com,
-                        pusat informasi, administrasi, dokumentasi,
-                        dan pelayanan komunitas MABES POLRI -
-                        ROBLOX INDONESIA.
-
-                        Portal ini disediakan untuk memudahkan
-                        seluruh personel dan pengunjung dalam
-                        mengakses informasi keanggotaan, peraturan,
-                        arsip surat, serta layanan administrasi
-                        komunitas.
-                    </p>
-
-                </div>
-
-                <div class="dashboard-overview" aria-label="Ringkasan portal">
-                    <article class="dashboard-stat">
-                        <span class="dashboard-stat-label">TOTAL PERSONEL</span>
-                        <strong id="dashboardMemberCount">0</strong>
-                        <small>Data pada roster anggota</small>
-                    </article>
-                    <article class="dashboard-stat">
-                        <span class="dashboard-stat-label">DOKUMEN TERSEDIA</span>
-                        <strong id="dashboardDocumentCount">0</strong>
-                        <small>SOP, surat, dan berkas cloud</small>
-                    </article>
-                    <article class="dashboard-stat">
-                        <span class="dashboard-stat-label">PENGUMUMAN AKTIF</span>
-                        <strong id="dashboardAnnouncementCount">0</strong>
-                        <small>Informasi resmi yang diterbitkan</small>
-                    </article>
-                    <article class="dashboard-stat">
-                        <span class="dashboard-stat-label">STATUS PORTAL</span>
-                        <strong style="font-size:19px">ONLINE</strong>
-                        <small>Sistem portal dapat diakses</small>
-                    </article>
-                </div>
-
-                <div class="dashboard-quicklinks" aria-label="Akses cepat">
-                    <button class="dashboard-quicklink" type="button" data-page="roster"><span>BUKA ROSTER PERSONEL</span><span>›</span></button>
-                    <button class="dashboard-quicklink" type="button" data-page="sop"><span>LIHAT PERATURAN & SOP</span><span>›</span></button>
-                    <button class="dashboard-quicklink" type="button" data-page="arsip"><span>BUKA ARSIP SURAT</span><span>›</span></button>
-                </div>
-
-                <div class="panel announcement-panel">
-                    <div class="announcement-header">
-                        <div class="panel-title">PAPAN PENGUMUMAN</div>
-                        <span class="announcement-live">● INFORMASI RESMI</span>
-                    </div>
-                    <div id="announcementList" aria-live="polite">
-                        <div class="announcement-empty">
-                            <strong>Belum ada pengumuman</strong>
-                            <p>Pengumuman resmi dari GNAP akan muncul di sini setelah diterbitkan melalui Dashboard Admin.</p>
+                <div class="home-hero">
+                    <div class="home-hero-copy">
+                        <div class="welcome-label">✦ OFFICIAL COMMUNITY PORTAL</div>
+                        <div class="home-kicker">GARDA NUSANTARA • ADHIRAJASA PRESISI</div>
+                        <h2>SELAMAT DATANG DI<br><span>PORTAL PUSAT GNAP</span></h2>
+                        <p>Pusat informasi, administrasi, dokumentasi, dan pelayanan komunitas. Akses data personel, pedoman, arsip, serta layanan pelaporan melalui satu portal terpadu.</p>
+                        <div class="home-hero-actions">
+                            <button type="button" class="home-primary-action" data-page="roster">JELAJAHI PERSONEL <b>↗</b></button>
+                            <span class="home-secure-note">● PORTAL INFORMASI TERPADU</span>
                         </div>
                     </div>
+                    <div class="home-hero-emblem">
+                        <div class="home-emblem-ring"><img src="https://cdn.discordapp.com/attachments/1566302179562754058/1567195429110685756/1792852427766.jpg?ex=6aeb4bfb&is=6ae9fa7b&hm=15f3bf22651987344ff056c1bb11f57592087ffa28552cd23b30097e01279d73" alt="Lambang Garda Nusantara"></div>
+                        <span>GARDA NUSANTARA</span>
+                        <small>ADHIRAJASA PRESISI</small>
+                    </div>
+                    <div class="home-hero-foot"><span>GNAP • PUSAT INFORMASI</span><span>EST. 2026</span></div>
                 </div>
 
-                <div class="info-grid">
-
-                    <div class="info-card">
-                        <span>STATUS PORTAL</span>
-                        <strong>OPERASIONAL</strong>
-                    </div>
-
-                    <div class="info-card">
-                        <span>INSTANSI</span>
-                        <strong>MABES POLRI</strong>
-                    </div>
-
-                    <div class="info-card">
-                        <span>TAHUN ADMINISTRASI</span>
-                        <strong>2026</strong>
-                    </div>
-
+                <div class="home-section-heading"><div><span class="home-section-kicker">OVERVIEW</span><h3>Ringkasan Portal</h3></div><span class="home-live-pill">● SISTEM AKTIF</span></div>
+                <div class="dashboard-overview" aria-label="Ringkasan portal">
+                    <article class="dashboard-stat"><span class="dashboard-stat-icon">♙</span><span class="dashboard-stat-label">TOTAL PERSONEL</span><strong id="dashboardMemberCount">0</strong><small>Terdaftar pada roster</small></article>
+                    <article class="dashboard-stat"><span class="dashboard-stat-icon">▤</span><span class="dashboard-stat-label">DOKUMEN TERSEDIA</span><strong id="dashboardDocumentCount">0</strong><small>SOP, surat, dan berkas</small></article>
+                    <article class="dashboard-stat"><span class="dashboard-stat-icon">▣</span><span class="dashboard-stat-label">PENGUMUMAN AKTIF</span><strong id="dashboardAnnouncementCount">0</strong><small>Informasi yang diterbitkan</small></article>
+                    <article class="dashboard-stat"><span class="dashboard-stat-icon">◉</span><span class="dashboard-stat-label">STATUS PORTAL</span><strong class="dashboard-online">ONLINE</strong><small>Layanan portal tersedia</small></article>
                 </div>
 
-                <div class="panel" style="margin-top:18px">
-
-                    <div class="panel-title">
-                        INFORMASI PUSAT
-                    </div>
-
-                    <p>
-                        Seluruh personel diharapkan menjaga
-                        kedisiplinan, profesionalitas, etika,
-                        dan tanggung jawab selama menjalankan
-                        kegiatan komunitas.
-
-                        Silakan gunakan menu navigasi di sebelah
-                        kiri untuk membuka layanan yang tersedia.
-                    </p>
-
+                <div class="home-section-heading"><div><span class="home-section-kicker">NAVIGATION</span><h3>Akses Layanan</h3></div><span class="home-section-hint">Pilih layanan untuk membuka halaman</span></div>
+                <div class="home-service-grid">
+                    <button class="home-service-card" type="button" data-page="roster"><span class="service-icon">♙</span><span><b>Roster Personel</b><small>Daftar anggota dan jabatan</small></span><i>↗</i></button>
+                    <button class="home-service-card" type="button" data-page="blacklist"><span class="service-icon">⊘</span><span><b>Daftar Blacklist</b><small>Data sanksi komunitas</small></span><i>↗</i></button>
+                    <button class="home-service-card" type="button" data-page="sop"><span class="service-icon">§</span><span><b>Peraturan & SOP</b><small>Pedoman dan ketentuan</small></span><i>↗</i></button>
+                    <button class="home-service-card" type="button" data-page="arsip"><span class="service-icon">▤</span><span><b>Arsip Surat</b><small>Surat dan keputusan</small></span><i>↗</i></button>
+                    <button class="home-service-card" type="button" data-page="cloud"><span class="service-icon">☁</span><span><b>Cloud Storage</b><small>Pusat berkas digital</small></span><i>↗</i></button>
+                    <button class="home-service-card" type="button" data-page="recruitment"><span class="service-icon">＋</span><span><b>Recruitment</b><small>Formulir pendaftaran</small></span><i>↗</i></button>
                 </div>
 
+                <div class="home-lower-grid">
+                    <div class="panel announcement-panel">
+                        <div class="announcement-header"><div><span class="home-section-kicker">LATEST UPDATE</span><div class="panel-title">PAPAN PENGUMUMAN</div></div><span class="announcement-live">● INFORMASI RESMI</span></div>
+                        <div id="announcementList" aria-live="polite"><div class="announcement-empty"><strong>Belum ada pengumuman</strong><p>Pengumuman resmi dari GNAP akan muncul di sini setelah diterbitkan melalui Dashboard Admin.</p></div></div>
+                    </div>
+                    <div class="panel home-info-panel">
+                        <span class="home-section-kicker">PUSAT INFORMASI</span><div class="panel-title">Panduan Portal</div>
+                        <p>Gunakan navigasi layanan untuk mengakses informasi sesuai kebutuhan.</p>
+                        <div class="home-info-row"><span>Dokumen & ketentuan</span><button type="button" data-page="sop">BUKA SOP ↗</button></div>
+                        <div class="home-info-row"><span>Administrasi surat</span><button type="button" data-page="arsip">BUKA ARSIP ↗</button></div>
+                        <div class="home-info-row"><span>Pelayanan komunitas</span><button type="button" data-page="recruitment">BUKA FORM ↗</button></div>
+                        <div class="home-clock"><span>WAKTU INDONESIA BARAT</span><strong id="homeClock">--:--:-- WIB</strong><small id="homeDate">Memuat tanggal...</small></div>
+                    </div>
+                </div>
             </section>
 
             <!-- =================================
@@ -2309,6 +2273,13 @@ document.querySelectorAll(".dashboard-quicklink[data-page]").forEach(button => {
         openPage(button.dataset.page, target || button);
     });
 });
+document.querySelectorAll("[data-page].home-service-card,[data-page].home-primary-action,[data-page].home-info-row button").forEach(button => {
+    button.addEventListener("click", () => {
+        const target = Array.from(menuButtons).find(item => item.dataset.page === button.dataset.page);
+        openPage(button.dataset.page, target || button);
+    });
+});
+
 
 
 /* =================================
@@ -2880,6 +2851,18 @@ renderDocumentLibrary("cloud", "pdf");
 ================================= */
 
 // Muat pengumuman dari database Supabase
+
+function updateHomeClock() {
+    const now = new Date();
+    const timeNode = document.getElementById("homeClock");
+    const dateNode = document.getElementById("homeDate");
+    if (!timeNode || !dateNode) return;
+    timeNode.textContent = new Intl.DateTimeFormat("id-ID",{timeZone:"Asia/Jakarta",hour:"2-digit",minute:"2-digit",second:"2-digit",hour12:false}).format(now) + " WIB";
+    dateNode.textContent = new Intl.DateTimeFormat("id-ID",{timeZone:"Asia/Jakarta",weekday:"long",day:"numeric",month:"long",year:"numeric"}).format(now);
+}
+updateHomeClock();
+setInterval(updateHomeClock,1000);
+
 updateDashboardStats();
 loadAnnouncements();
 
