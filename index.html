@@ -478,6 +478,86 @@ body {
     max-width: 700px;
 }
 
+.dashboard-overview {
+    display: grid;
+    grid-template-columns: repeat(4,minmax(0,1fr));
+    gap: 13px;
+    margin: 0 0 18px;
+}
+.dashboard-stat {
+    position: relative;
+    overflow: hidden;
+    min-height: 112px;
+    padding: 17px;
+    border: 1px solid var(--border);
+    border-radius: 11px;
+    background: linear-gradient(145deg,#172944,#111d33);
+}
+.dashboard-stat::after {
+    content: "";
+    position: absolute;
+    width: 74px;
+    height: 74px;
+    right: -20px;
+    bottom: -27px;
+    border-radius: 50%;
+    background: rgba(214,182,108,.08);
+}
+.dashboard-stat-label {
+    display: block;
+    color: var(--muted);
+    font-size: 10px;
+    letter-spacing: .7px;
+    font-weight: 700;
+}
+.dashboard-stat strong {
+    display: block;
+    margin-top: 12px;
+    color: var(--gold);
+    font-size: 27px;
+    line-height: 1;
+}
+.dashboard-stat small {
+    display: block;
+    margin-top: 8px;
+    color: #91a2bd;
+    font-size: 10px;
+}
+.dashboard-quicklinks {
+    display: grid;
+    grid-template-columns: repeat(3,minmax(0,1fr));
+    gap: 10px;
+    margin: 0 0 18px;
+}
+.dashboard-quicklink {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 13px 15px;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    background: var(--panel);
+    color: #dce5f4;
+    text-align: left;
+    font: inherit;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: .18s ease;
+}
+.dashboard-quicklink:hover {
+    border-color: rgba(214,182,108,.55);
+    background: var(--panel2);
+}
+.dashboard-quicklink span:last-child {
+    color: var(--gold);
+    font-size: 16px;
+}
+@media (max-width: 760px) {
+    .dashboard-overview { grid-template-columns: repeat(2,minmax(0,1fr)); }
+    .dashboard-quicklinks { grid-template-columns: 1fr; }
+}
 .info-grid {
     display: grid;
     grid-template-columns: repeat(3,minmax(0,1fr));
@@ -1645,6 +1725,35 @@ tbody tr:last-child td {
 
                 </div>
 
+                <div class="dashboard-overview" aria-label="Ringkasan portal">
+                    <article class="dashboard-stat">
+                        <span class="dashboard-stat-label">TOTAL PERSONEL</span>
+                        <strong id="dashboardMemberCount">0</strong>
+                        <small>Data pada roster anggota</small>
+                    </article>
+                    <article class="dashboard-stat">
+                        <span class="dashboard-stat-label">DOKUMEN TERSEDIA</span>
+                        <strong id="dashboardDocumentCount">0</strong>
+                        <small>SOP, surat, dan berkas cloud</small>
+                    </article>
+                    <article class="dashboard-stat">
+                        <span class="dashboard-stat-label">PENGUMUMAN AKTIF</span>
+                        <strong id="dashboardAnnouncementCount">0</strong>
+                        <small>Informasi resmi yang diterbitkan</small>
+                    </article>
+                    <article class="dashboard-stat">
+                        <span class="dashboard-stat-label">STATUS PORTAL</span>
+                        <strong style="font-size:19px">ONLINE</strong>
+                        <small>Sistem portal dapat diakses</small>
+                    </article>
+                </div>
+
+                <div class="dashboard-quicklinks" aria-label="Akses cepat">
+                    <button class="dashboard-quicklink" type="button" data-page="roster"><span>BUKA ROSTER PERSONEL</span><span>›</span></button>
+                    <button class="dashboard-quicklink" type="button" data-page="sop"><span>LIHAT PERATURAN & SOP</span><span>›</span></button>
+                    <button class="dashboard-quicklink" type="button" data-page="arsip"><span>BUKA ARSIP SURAT</span><span>›</span></button>
+                </div>
+
                 <div class="panel announcement-panel">
                     <div class="announcement-header">
                         <div class="panel-title">PAPAN PENGUMUMAN</div>
@@ -1653,7 +1762,7 @@ tbody tr:last-child td {
                     <div id="announcementList" aria-live="polite">
                         <div class="announcement-empty">
                             <strong>Belum ada pengumuman</strong>
-                            <p>Pengumuman resmi dari MABES POLRI akan ditampilkan di bagian ini setelah Dashboard Admin terhubung.</p>
+                            <p>Pengumuman resmi dari GNAP akan muncul di sini setelah diterbitkan melalui Dashboard Admin.</p>
                         </div>
                     </div>
                 </div>
@@ -2013,6 +2122,18 @@ const supabaseClient = window.supabase.createClient(
     SUPABASE_PUBLISHABLE_KEY
 );
 
+function updateDashboardStats(announcementCount = null) {
+    const memberCount = document.querySelectorAll("#page-roster tbody tr").length;
+    const documentCount = Object.values(DOCUMENT_LIBRARIES).reduce((total, library) =>
+        total + library.categories.reduce((sum, category) => sum + category.files.length, 0), 0);
+    const memberNode = document.getElementById("dashboardMemberCount");
+    const documentNode = document.getElementById("dashboardDocumentCount");
+    const announcementNode = document.getElementById("dashboardAnnouncementCount");
+    if (memberNode) memberNode.textContent = memberCount;
+    if (documentNode) documentNode.textContent = documentCount;
+    if (announcementNode && announcementCount !== null) announcementNode.textContent = announcementCount;
+}
+
 async function loadAnnouncements() {
     const container = document.getElementById("announcementList");
     if (!container) return;
@@ -2025,10 +2146,13 @@ async function loadAnnouncements() {
         .limit(10);
 
     if (error) {
+        updateDashboardStats(0);
         console.error("Gagal memuat pengumuman:", error.message);
         container.innerHTML = '<div class="announcement-empty"><strong>Pengumuman belum dapat dimuat</strong><p>Silakan coba muat ulang halaman beberapa saat lagi.</p></div>';
         return;
     }
+
+    updateDashboardStats(data ? data.length : 0);
 
     if (!data || data.length === 0) {
         container.innerHTML = '<div class="announcement-empty"><strong>Belum ada pengumuman</strong><p>Pengumuman resmi akan muncul di sini setelah diterbitkan melalui Dashboard Admin.</p></div>';
@@ -2749,6 +2873,7 @@ renderDocumentLibrary("cloud", "pdf");
 ================================= */
 
 // Muat pengumuman dari database Supabase
+updateDashboardStats();
 loadAnnouncements();
 
 // Pastikan halaman awal tersedia
