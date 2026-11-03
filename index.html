@@ -2303,6 +2303,13 @@ menuButtons.forEach(button => {
 
 });
 
+document.querySelectorAll(".dashboard-quicklink[data-page]").forEach(button => {
+    button.addEventListener("click", () => {
+        const target = Array.from(menuButtons).find(item => item.dataset.page === button.dataset.page);
+        openPage(button.dataset.page, target || button);
+    });
+});
+
 
 /* =================================
    4. LIVE FILTER SEARCH
