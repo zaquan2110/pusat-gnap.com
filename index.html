@@ -1,239 +1,1930 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portal Pusat Komunitas - Official Template</title>
-    <style>
-        :root {
-            --bg-dark: #020617;
-            --sidebar-bg: #0f172a;
-            --content-bg: #0b1329;
-            --accent-blue: #2563eb;
-            --accent-hover: #1d4ed8;
-            --accent-red: #dc2626;
-            --text-light: #f8fafc;
-            --border-color: #334155;
-            --text-muted: #64748b;
-            --folder-bg: #1e293b;
-        }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
-        body { background-color: var(--bg-dark); color: var(--text-light); height: 100vh; overflow: hidden; display: flex; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b1329">
+<title>Portal Pusat Member | MABES POLRI</title>
 
-        /* LAYAR KIRI: SIDEBAR */
-        .sidebar {
-            width: 310px;
-            background-color: var(--sidebar-bg);
-            border-right: 1px solid var(--border-color);
-            display: flex;
-            flex-direction: column;
-            padding: 15px;
-            height: 100%;
-            flex-shrink: 0;
+<style>
+:root {
+    --sidebar: #0f172a;
+    --content: #0b1329;
+    --panel: #131f38;
+    --panel2: #192741;
+    --border: rgba(255,255,255,.09);
+    --gold: #d6b66c;
+    --blue: #3977c9;
+    --red: #dc3545;
+    --text: #e8edf7;
+    --muted: #91a0b9;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: var(--content);
+    color: var(--text);
+}
+
+/* =================================
+   LAYOUT UTAMA
+================================= */
+
+.app {
+    display: grid;
+    grid-template-columns: 310px minmax(0, 1fr);
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+}
+
+/* =================================
+   SIDEBAR
+================================= */
+
+.sidebar {
+    background: var(--sidebar);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    overflow: hidden;
+    padding: 17px 15px 12px;
+}
+
+/* HEADER INSTANSI */
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 5px 3px 16px;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+}
+
+.logo {
+    width: 49px;
+    height: 49px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    border: 2px solid var(--gold);
+    background: linear-gradient(145deg,#263b5e,#101a30);
+    display: grid;
+    place-items: center;
+    color: var(--gold);
+    font-size: 11px;
+    font-weight: 900;
+    overflow: hidden;
+}
+
+.logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.brand-name {
+    font-size: 12px;
+    line-height: 1.5;
+    font-weight: 800;
+    letter-spacing: .5px;
+}
+
+.brand-name span {
+    display: block;
+    color: var(--gold);
+    font-size: 10px;
+    letter-spacing: 1.2px;
+    margin-top: 3px;
+}
+
+/* =================================
+   KTP ANGGOTA
+================================= */
+
+.member-card {
+    flex-shrink: 0;
+    margin-top: 15px;
+    padding: 13px;
+    border: 1px solid rgba(214,182,108,.3);
+    border-radius: 10px;
+    background:
+        linear-gradient(135deg,rgba(214,182,108,.08),transparent 60%),
+        #17243b;
+    position: relative;
+    overflow: hidden;
+}
+
+.member-card::after {
+    content: "POLRI";
+    position: absolute;
+    right: -4px;
+    bottom: -5px;
+    font-size: 40px;
+    font-weight: 900;
+    color: rgba(255,255,255,.025);
+    pointer-events: none;
+}
+
+.card-label {
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: var(--gold);
+    margin-bottom: 11px;
+}
+
+.member-profile {
+    display: flex;
+    gap: 11px;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.avatar {
+    width: 56px;
+    height: 56px;
+    border-radius: 8px;
+    border: 2px solid var(--gold);
+    object-fit: cover;
+    background: #253550;
+}
+
+.member-name {
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.member-role {
+    color: var(--gold);
+    font-size: 11px;
+    margin-top: 4px;
+}
+
+.member-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    position: relative;
+    z-index: 1;
+}
+
+.detail-item small {
+    display: block;
+    font-size: 9px;
+    color: var(--muted);
+    margin-bottom: 3px;
+}
+
+.detail-item strong {
+    font-size: 10px;
+    overflow-wrap: anywhere;
+}
+
+/* =================================
+   SEARCH BAR
+================================= */
+
+.search-box {
+    position: relative;
+    margin: 15px 0 10px;
+    flex-shrink: 0;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 11px 12px 11px 37px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: #192640;
+    color: white;
+    outline: none;
+    font-size: 12px;
+}
+
+.search-box input:focus {
+    border-color: var(--blue);
+}
+
+.search-icon {
+    position: absolute;
+    left: 12px;
+    top: 9px;
+    color: var(--muted);
+    font-size: 18px;
+}
+
+/* =================================
+   MENU VERTIKAL
+================================= */
+
+.menu-scroll {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    padding-right: 4px;
+}
+
+.menu-scroll::-webkit-scrollbar {
+    width: 4px;
+}
+
+.menu-scroll::-webkit-scrollbar-thumb {
+    background: #34435d;
+    border-radius: 10px;
+}
+
+.menu-group {
+    margin-bottom: 15px;
+}
+
+.menu-title {
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    color: #7888a5;
+    padding: 7px 8px;
+}
+
+.menu-btn {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 11px;
+    padding: 10px 11px;
+    border: 1px solid transparent;
+    border-radius: 7px;
+    background: transparent;
+    color: #b9c5d9;
+    text-align: left;
+    cursor: pointer;
+    font-size: 12px;
+    margin-bottom: 3px;
+    transition: .2s;
+}
+
+.menu-btn:hover {
+    background: #1c2c48;
+    color: white;
+}
+
+.menu-btn.active {
+    background: rgba(57,119,201,.18);
+    border-color: rgba(57,119,201,.35);
+    color: white;
+}
+
+.menu-btn.active .menu-icon {
+    color: #75aaff;
+}
+
+.menu-icon {
+    width: 19px;
+    text-align: center;
+    font-size: 15px;
+}
+
+/* FOOTER */
+
+.sidebar-footer {
+    flex-shrink: 0;
+    padding-top: 11px;
+    margin-top: 7px;
+    border-top: 1px solid var(--border);
+}
+
+.clock-label {
+    font-size: 9px;
+    color: var(--muted);
+    letter-spacing: 1.5px;
+    text-align: center;
+}
+
+.clock {
+    color: var(--gold);
+    font-size: 20px;
+    font-weight: 800;
+    text-align: center;
+    margin-top: 3px;
+    font-variant-numeric: tabular-nums;
+}
+
+.footer-copy {
+    color: #65748e;
+    text-align: center;
+    font-size: 9px;
+    margin-top: 5px;
+}
+
+/* =================================
+   KONTEN KANAN
+================================= */
+
+.main {
+    background: var(--content);
+    min-width: 0;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.topbar {
+    height: 65px;
+    flex-shrink: 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 25px;
+    background: rgba(15,23,42,.55);
+}
+
+.page-heading {
+    font-size: 15px;
+    font-weight: 800;
+}
+
+.page-subheading {
+    color: var(--muted);
+    font-size: 10px;
+    margin-top: 4px;
+}
+
+.status {
+    font-size: 10px;
+    color: #66d49a;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.status-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #45d68b;
+    box-shadow: 0 0 8px #45d68b;
+}
+
+/* AREA HALAMAN */
+
+.content-scroll {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    padding: 25px;
+}
+
+.content-scroll::-webkit-scrollbar {
+    width: 6px;
+}
+
+.content-scroll::-webkit-scrollbar-thumb {
+    background: #34435d;
+    border-radius: 10px;
+}
+
+.page {
+    display: none;
+    max-width: 1250px;
+    margin: auto;
+}
+
+.page.active {
+    display: block;
+}
+
+.page-title {
+    font-size: 23px;
+    font-weight: 800;
+    margin-bottom: 8px;
+}
+
+.page-description {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 22px;
+}
+
+/* PANEL */
+
+.panel {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 11px;
+    padding: 20px;
+    margin-bottom: 17px;
+}
+
+.panel-title {
+    font-size: 14px;
+    font-weight: 800;
+    margin-bottom: 13px;
+}
+
+.panel p {
+    font-size: 12px;
+    line-height: 1.9;
+    color: #bac6da;
+}
+
+/* =================================
+   BERANDA
+================================= */
+
+.welcome-banner {
+    padding: 32px;
+    border: 1px solid rgba(214,182,108,.25);
+    border-radius: 12px;
+    background:
+        radial-gradient(circle at 90% 20%,rgba(57,119,201,.22),transparent 35%),
+        linear-gradient(120deg,#192b49,#131f38);
+    margin-bottom: 20px;
+}
+
+.welcome-label {
+    color: var(--gold);
+    font-size: 10px;
+    letter-spacing: 2px;
+    font-weight: 800;
+    margin-bottom: 13px;
+}
+
+.welcome-banner h2 {
+    font-size: clamp(20px,3vw,31px);
+    line-height: 1.4;
+    margin-bottom: 12px;
+}
+
+.welcome-banner p {
+    color: #b7c4d9;
+    font-size: 12px;
+    line-height: 1.9;
+    max-width: 700px;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(3,minmax(0,1fr));
+    gap: 13px;
+}
+
+.info-card {
+    padding: 17px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+}
+
+.info-card span {
+    color: var(--muted);
+    font-size: 10px;
+}
+
+.info-card strong {
+    display: block;
+    font-size: 14px;
+    margin-top: 9px;
+    color: var(--gold);
+}
+
+/* =================================
+   TABEL
+================================= */
+
+.table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 540px;
+}
+
+th, td {
+    padding: 14px 15px;
+    text-align: left;
+    font-size: 11px;
+    border-bottom: 1px solid var(--border);
+}
+
+th {
+    background: #1c2c48;
+    color: var(--gold);
+    font-size: 10px;
+    letter-spacing: .6px;
+}
+
+td {
+    color: #d4ddec;
+}
+
+tbody tr:hover {
+    background: rgba(255,255,255,.025);
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.rank {
+    display: inline-block;
+    padding: 5px 9px;
+    background: rgba(57,119,201,.16);
+    color: #91bbff;
+    border-radius: 5px;
+    font-size: 10px;
+}
+
+/* =================================
+   SOP DAN PERATURAN
+================================= */
+
+.article {
+    padding: 18px;
+    border-left: 3px solid var(--gold);
+    background: #17243b;
+    border-radius: 0 8px 8px 0;
+    margin-bottom: 14px;
+}
+
+.article h3 {
+    font-size: 13px;
+    margin-bottom: 10px;
+    color: var(--gold);
+}
+
+.article p {
+    font-size: 12px;
+    line-height: 1.9;
+    color: #bac6da;
+}
+
+/* =================================
+   ARSIP SURAT
+================================= */
+
+.letter-header {
+    text-align: center;
+    margin: 10px 0 22px;
+}
+
+.letter-header strong {
+    color: var(--gold);
+    font-size: 16px;
+}
+
+.letter-number {
+    text-align: right;
+    font-size: 11px;
+    margin-bottom: 20px;
+}
+
+.letter-title {
+    text-align: center;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.letter-body {
+    line-height: 2;
+    font-size: 12px;
+    color: #bac6da;
+}
+
+.letter-signature {
+    text-align: right;
+    margin-top: 35px;
+    line-height: 1.8;
+}
+
+.letter-signature strong {
+    color: var(--gold);
+}
+
+/* =================================
+   CLOUD STORAGE
+================================= */
+
+.file-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(190px,1fr));
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.file-card {
+    padding: 16px;
+    background: var(--panel2);
+    border: 1px solid var(--border);
+    border-radius: 9px;
+}
+
+.file-type {
+    font-size: 25px;
+    margin-bottom: 10px;
+}
+
+.file-card h3 {
+    font-size: 12px;
+    margin-bottom: 6px;
+}
+
+.file-card p {
+    color: var(--muted);
+    font-size: 10px;
+    margin-bottom: 13px;
+}
+
+.open-file {
+    width: 100%;
+    border: 0;
+    padding: 9px;
+    background: #285da3;
+    color: white;
+    font-weight: 700;
+    font-size: 10px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.open-file:hover {
+    background: #3678ca;
+}
+
+.viewer {
+    width: 100%;
+    height: 520px;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    background: white;
+}
+
+.viewer-empty {
+    height: 520px;
+    border: 1px dashed #42516c;
+    border-radius: 9px;
+    display: grid;
+    place-items: center;
+    text-align: center;
+    color: var(--muted);
+    padding: 20px;
+    background: #101c32;
+    font-size: 12px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* =================================
+   TOMBOL
+================================= */
+
+.action-btn {
+    display: inline-block;
+    border: 0;
+    border-radius: 7px;
+    padding: 11px 17px;
+    background: var(--blue);
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+/* =================================
+   RESPONSIVE
+================================= */
+
+@media(max-width:760px) {
+
+    .app {
+        grid-template-columns: 1fr;
+        grid-template-rows: minmax(230px,42dvh) minmax(0,1fr);
+    }
+
+    .sidebar {
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+        padding: 10px 12px;
+    }
+
+    .brand {
+        padding-bottom: 9px;
+    }
+
+    .logo {
+        width: 38px;
+        height: 38px;
+    }
+
+    .member-card {
+        margin-top: 9px;
+        padding: 9px;
+    }
+
+    .avatar {
+        width: 43px;
+        height: 43px;
+    }
+
+    .member-profile {
+        margin-bottom: 8px;
+    }
+
+    .search-box {
+        margin: 9px 0;
+    }
+
+    .menu-group {
+        margin-bottom: 8px;
+    }
+
+    .menu-btn {
+        padding: 9px;
+    }
+
+    .sidebar-footer {
+        padding-top: 6px;
+    }
+
+    .clock {
+        font-size: 15px;
+    }
+
+    .footer-copy {
+        display: none;
+    }
+
+    .topbar {
+        height: 55px;
+        padding: 0 15px;
+    }
+
+    .content-scroll {
+        padding: 15px;
+    }
+
+    .welcome-banner {
+        padding: 22px;
+    }
+
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .viewer,
+    .viewer-empty {
+        height: 400px;
+    }
+}
+
+@media(max-width:400px) {
+
+    .app {
+        grid-template-rows: minmax(220px,45dvh) minmax(0,1fr);
+    }
+
+    .brand-name {
+        font-size: 10px;
+    }
+
+    .member-name {
+        font-size: 12px;
+    }
+
+    .detail-item strong {
+        font-size: 9px;
+    }
+
+    .page-title {
+        font-size: 20px;
+    }
+
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- =================================
+         SIDEBAR KIRI
+    ================================== -->
+
+    <aside class="sidebar">
+
+        <!-- HEADER INSTANSI -->
+
+        <div class="brand">
+
+            <div class="logo">
+                MABES
+            </div>
+
+            <div class="brand-name">
+                MABES POLRI
+                <br>
+                ROBLOX INDONESIA
+                <span>PUSAT GNAP.COM</span>
+            </div>
+
+        </div>
+
+        <!-- KTP ANGGOTA -->
+
+        <div class="member-card">
+
+            <div class="card-label">
+                IDENTITAS PERSONEL
+            </div>
+
+            <div class="member-profile">
+
+                <img
+                    class="avatar"
+                    src="https://tr.rbxcdn.com/30DAY-AvatarHeadshot-PLACEHOLDER/150/150/AvatarHeadshot/Webp/noFilter"
+                    alt="Avatar Zaquan2115"
+                    onerror="this.onerror=null;this.src='https://placehold.co/150x150/253550/d6b66c?text=Z';"
+                >
+
+                <div>
+                    <div class="member-name">Zaquan2115</div>
+                    <div class="member-role">CO-OWNER</div>
+                </div>
+
+            </div>
+
+            <div class="member-details">
+
+                <div class="detail-item">
+                    <small>DISCORD ID</small>
+                    <strong>zaquan_dc</strong>
+                </div>
+
+                <div class="detail-item">
+                    <small>JABATAN</small>
+                    <strong>Co-Owner</strong>
+                </div>
+
+                <div class="detail-item">
+                    <small>NOMOR INDUK PERSONEL</small>
+                    <strong>POL-20261103</strong>
+                </div>
+
+                <div class="detail-item">
+                    <small>STATUS</small>
+                    <strong style="color:#64d99b">AKTIF</strong>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- SEARCH BAR -->
+
+        <div class="search-box">
+
+            <span class="search-icon">⌕</span>
+
+            <input
+                type="text"
+                id="menuSearch"
+                placeholder="Cari menu portal..."
+                autocomplete="off"
+            >
+
+        </div>
+
+        <!-- MENU NAVIGASI -->
+
+        <nav class="menu-scroll" id="menuList">
+
+            <div class="menu-group">
+
+                <div class="menu-title">UTAMA</div>
+
+                <button class="menu-btn active" data-page="beranda">
+                    <span class="menu-icon">⌂</span>
+                    Beranda Pusat
+                </button>
+
+            </div>
+
+            <div class="menu-group">
+
+                <div class="menu-title">DATA PERSONEL</div>
+
+                <button class="menu-btn" data-page="roster">
+                    <span class="menu-icon">♙</span>
+                    Roster Anggota
+                </button>
+
+                <button class="menu-btn" data-page="blacklist">
+                    <span class="menu-icon">⊘</span>
+                    Daftar Blacklist
+                </button>
+
+            </div>
+
+            <div class="menu-group">
+
+                <div class="menu-title">LEGALITAS & ARSIP</div>
+
+                <button class="menu-btn" data-page="sop">
+                    <span class="menu-icon">▤</span>
+                    Undang-Undang / SOP
+                </button>
+
+                <button class="menu-btn" data-page="arsip">
+                    <span class="menu-icon">▣</span>
+                    Arsip Surat SK
+                </button>
+
+            </div>
+
+            <div class="menu-group">
+
+                <div class="menu-title">CLOUD STORAGE</div>
+
+                <button class="menu-btn" data-page="cloud">
+                    <span class="menu-icon">☁</span>
+                    Berkas & File Cloud
+                </button>
+
+            </div>
+
+            <div class="menu-group">
+
+                <div class="menu-title">PELAYANAN PUBLIK</div>
+
+                <button class="menu-btn" data-external="recruitment">
+                    <span class="menu-icon">✚</span>
+                    Formulir Recruitment
+                </button>
+
+                <button class="menu-btn" data-external="report">
+                    <span class="menu-icon">⚑</span>
+                    Laporan Pelanggaran
+                </button>
+
+            </div>
+
+            <div class="menu-group">
+
+                <div class="menu-title">EKSTERNAL</div>
+
+                <button class="menu-btn" data-external="discord">
+                    <span class="menu-icon">◈</span>
+                    Server Discord
+                </button>
+
+            </div>
+
+        </nav>
+
+        <!-- JAM DIGITAL -->
+
+        <div class="sidebar-footer">
+
+            <div class="clock-label">
+                WAKTU INDONESIA BARAT
+            </div>
+
+            <div class="clock" id="digitalClock">
+                00:00:00 WIB
+            </div>
+
+            <div class="footer-copy">
+                © 2026 MABES POLRI ROBLOX INDONESIA
+            </div>
+
+        </div>
+
+    </aside>
+
+    <!-- =================================
+         KONTEN KANAN
+    ================================== -->
+
+    <main class="main">
+
+        <!-- HEADER KONTEN -->
+
+        <header class="topbar">
+
+            <div>
+                <div class="page-heading" id="topTitle">
+                    Beranda Pusat
+                </div>
+
+                <div class="page-subheading">
+                    PORTAL INFORMASI DAN ADMINISTRASI KOMUNITAS
+                </div>
+            </div>
+
+            <div class="status">
+                <span class="status-dot"></span>
+                SISTEM ONLINE
+            </div>
+
+        </header>
+
+        <!-- AREA KONTEN -->
+
+        <div class="content-scroll">
+
+            <!-- =================================
+                 HALAMAN BERANDA
+            ================================== -->
+
+            <section class="page active" id="page-beranda">
+
+                <div class="welcome-banner">
+
+                    <div class="welcome-label">
+                        OFFICIAL COMMUNITY PORTAL
+                    </div>
+
+                    <h2>
+                        SELAMAT DATANG DI
+                        PORTAL PUSAT MABES POLRI
+                    </h2>
+
+                    <p>
+                        Selamat datang di Portal Pusat GNAP.com,
+                        pusat informasi, administrasi, dokumentasi,
+                        dan pelayanan komunitas MABES POLRI -
+                        ROBLOX INDONESIA.
+
+                        Portal ini disediakan untuk memudahkan
+                        seluruh personel dan pengunjung dalam
+                        mengakses informasi keanggotaan, peraturan,
+                        arsip surat, serta layanan administrasi
+                        komunitas.
+                    </p>
+
+                </div>
+
+                <div class="info-grid">
+
+                    <div class="info-card">
+                        <span>STATUS PORTAL</span>
+                        <strong>OPERASIONAL</strong>
+                    </div>
+
+                    <div class="info-card">
+                        <span>INSTANSI</span>
+                        <strong>MABES POLRI</strong>
+                    </div>
+
+                    <div class="info-card">
+                        <span>TAHUN ADMINISTRASI</span>
+                        <strong>2026</strong>
+                    </div>
+
+                </div>
+
+                <div class="panel" style="margin-top:18px">
+
+                    <div class="panel-title">
+                        INFORMASI PUSAT
+                    </div>
+
+                    <p>
+                        Seluruh personel diharapkan menjaga
+                        kedisiplinan, profesionalitas, etika,
+                        dan tanggung jawab selama menjalankan
+                        kegiatan komunitas.
+
+                        Silakan gunakan menu navigasi di sebelah
+                        kiri untuk membuka layanan yang tersedia.
+                    </p>
+
+                </div>
+
+            </section>
+
+            <!-- =================================
+                 ROSTER ANGGOTA
+            ================================== -->
+
+            <section class="page" id="page-roster">
+
+                <h1 class="page-title">
+                    Roster Anggota
+                </h1>
+
+                <p class="page-description">
+                    Database daftar personel MABES POLRI -
+                    ROBLOX INDONESIA.
+                </p>
+
+                <div class="panel">
+
+                    <div class="panel-title">
+                        DATA PERSONEL
+                    </div>
+
+                    <div class="table-wrap">
+
+                        <table>
+
+                            <thead>
+                                <tr>
+                                    <th>NO.</th>
+                                    <th>NAMA</th>
+                                    <th>PANGKAT</th>
+                                    <th>JABATAN</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                <tr>
+                                    <td>01</td>
+                                    <td>Ibu Emamoyy</td>
+                                    <td>
+                                        <span class="rank">Komjen Pol</span>
+                                    </td>
+                                    <td>Dan Polwan</td>
+                                </tr>
+
+                                <tr>
+                                    <td>02</td>
+                                    <td>Ibu Khal</td>
+                                    <td>
+                                        <span class="rank">Irjen Pol</span>
+                                    </td>
+                                    <td>Komdan Dokkes</td>
+                                </tr>
+
+                                <tr>
+                                    <td>03</td>
+                                    <td>Ibu Yeyaa</td>
+                                    <td>
+                                        <span class="rank">Brigjen Pol</span>
+                                    </td>
+                                    <td>Waka Dokkes</td>
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- =================================
+                 BLACKLIST
+            ================================== -->
+
+            <section class="page" id="page-blacklist">
+
+                <h1 class="page-title">
+                    Daftar Blacklist
+                </h1>
+
+                <p class="page-description">
+                    Dokumentasi akun yang mendapatkan sanksi
+                    atau masuk daftar blacklist komunitas.
+                </p>
+
+                <div class="panel">
+
+                    <div class="panel-title">
+                        DATABASE BLACKLIST
+                    </div>
+
+                    <div class="table-wrap">
+
+                        <table>
+
+                            <thead>
+                                <tr>
+                                    <th>NO.</th>
+                                    <th>NAMA AKUN</th>
+                                    <th>ALASAN</th>
+                                    <th>TANGGAL</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                <tr>
+                                    <td colspan="4" style="text-align:center;color:#91a0b9">
+                                        Belum ada data blacklist.
+                                    </td>
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- =================================
+                 UNDANG-UNDANG / SOP
+            ================================== -->
+
+            <section class="page" id="page-sop">
+
+                <h1 class="page-title">
+                    Undang-Undang / SOP
+                </h1>
+
+                <p class="page-description">
+                    Pedoman kedisiplinan dan tata tertib
+                    seluruh personel komunitas.
+                </p>
+
+                <div class="panel">
+
+                    <div class="panel-title">
+                        PERATURAN INTERNAL MABES POLRI
+                    </div>
+
+                    <div class="article">
+
+                        <h3>
+                            PASAL 1 - KEDISIPLINAN
+                        </h3>
+
+                        <p>
+                            1. Setiap anggota wajib menaati
+                            seluruh peraturan dan ketentuan
+                            yang berlaku di dalam komunitas.
+
+                            <br><br>
+
+                            2. Setiap anggota wajib menjaga
+                            sikap, etika, dan profesionalitas
+                            ketika melaksanakan tugas.
+
+                            <br><br>
+
+                            3. Anggota dilarang melakukan
+                            tindakan yang merugikan nama baik
+                            komunitas.
+
+                            <br><br>
+
+                            4. Pelanggaran terhadap ketentuan
+                            kedisiplinan dapat dikenakan sanksi
+                            sesuai tingkat pelanggaran.
+                        </p>
+
+                    </div>
+
+                    <div class="article">
+
+                        <h3>
+                            PASAL 2 - PENYALAHGUNAAN WEWENANG
+                            (ABUSE OF POWER)
+                        </h3>
+
+                        <p>
+                            1. Setiap pejabat dilarang menggunakan
+                            jabatan untuk kepentingan pribadi.
+
+                            <br><br>
+
+                            2. Dilarang melakukan intimidasi,
+                            penyalahgunaan hak administrasi,
+                            atau tindakan sewenang-wenang.
+
+                            <br><br>
+
+                            3. Setiap keputusan jabatan harus
+                            berdasarkan kewenangan dan ketentuan
+                            yang berlaku.
+
+                            <br><br>
+
+                            4. Penyalahgunaan wewenang dapat
+                            dikenakan evaluasi jabatan,
+                            pencabutan wewenang, atau sanksi
+                            lainnya berdasarkan keputusan
+                            otoritas komunitas.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- =================================
+                 ARSIP SURAT SK
+            ================================== -->
+
+            <section class="page" id="page-arsip">
+
+                <h1 class="page-title">
+                    Arsip Surat SK
+                </h1>
+
+                <p class="page-description">
+                    Dokumentasi administrasi dan surat resmi
+                    MABES POLRI - ROBLOX INDONESIA.
+                </p>
+
+                <div class="panel">
+
+                    <div class="panel-title">
+                        SALINAN SURAT USULAN
+                    </div>
+
+                    <div class="letter-header">
+
+                        <strong>MABES POLRI</strong>
+
+                        <p style="font-size:10px;color:#91a0b9">
+                            ROBLOX INDONESIA
+                            <br>
+                            SURAT ADMINISTRASI INTERNAL
+                        </p>
+
+                    </div>
+
+                    <div class="letter-number">
+                        Nomor: 03/MABES-POLRI/XI/2026
+                    </div>
+
+                    <h3 class="letter-title">
+                        SURAT USULAN KENAIKAN PANGKAT
+                    </h3>
+
+                    <div class="letter-body">
+
+                        Kepada Yth.
+                        <br>
+                        Pimpinan MABES POLRI
+                        <br>
+                        Di Tempat
+
+                        <br><br>
+
+                        Dengan hormat,
+
+                        <br><br>
+
+                        Sehubungan dengan pelaksanaan evaluasi
+                        administrasi dan penilaian kinerja
+                        personel, bersama ini disampaikan
+                        surat usulan kenaikan pangkat bagi
+                        anggota yang dinilai telah memenuhi
+                        persyaratan sesuai ketentuan internal
+                        komunitas.
+
+                        <br><br>
+
+                        Usulan ini diajukan untuk mendapatkan
+                        pemeriksaan, pertimbangan, dan keputusan
+                        lebih lanjut dari pimpinan yang
+                        berwenang.
+
+                        <br><br>
+
+                        Demikian surat usulan ini disampaikan
+                        untuk dapat ditindaklanjuti sebagaimana
+                        mestinya.
+
+                    </div>
+
+                    <div class="letter-signature">
+
+                        Hormat kami,
+                        <br>
+                        Administrasi MABES POLRI
+
+                        <br><br><br>
+
+                        <strong>PEJABAT BERWENANG</strong>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- =================================
+                 CLOUD STORAGE
+            ================================== -->
+
+            <section class="page" id="page-cloud">
+
+                <h1 class="page-title">
+                    Berkas & File Cloud
+                </h1>
+
+                <p class="page-description">
+                    Pusat penyimpanan dan pratinjau dokumen
+                    administrasi komunitas.
+                </p>
+
+                <div class="panel">
+
+                    <div class="panel-title">
+                        DAFTAR DOKUMEN
+                    </div>
+
+                    <div class="file-grid">
+
+                        <div class="file-card">
+
+                            <div class="file-type">📕</div>
+
+                            <h3>Dokumen PDF</h3>
+
+                            <p>Format PDF / Surat / SK</p>
+
+                            <button
+                                class="open-file"
+                                data-file="pdf"
+                            >
+                                Buka Berkas
+                            </button>
+
+                        </div>
+
+                        <div class="file-card">
+
+                            <div class="file-type">📊</div>
+
+                            <h3>Data Excel</h3>
+
+                            <p>Format XLS / XLSX</p>
+
+                            <button
+                                class="open-file"
+                                data-file="excel"
+                            >
+                                Buka Berkas
+                            </button>
+
+                        </div>
+
+                        <div class="file-card">
+
+                            <div class="file-type">📘</div>
+
+                            <h3>Dokumen Word</h3>
+
+                            <p>Format DOC / DOCX</p>
+
+                            <button
+                                class="open-file"
+                                data-file="word"
+                            >
+                                Buka Berkas
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                    <div class="panel-title">
+                        LAYAR KACA PRATINJAU
+                    </div>
+
+                    <div id="viewerEmpty" class="viewer-empty">
+
+                        <div>
+
+                            <div style="font-size:35px;margin-bottom:12px">
+                                📂
+                            </div>
+
+                            <strong>PRATINJAU DOKUMEN</strong>
+
+                            <p style="margin-top:8px">
+                                Pilih tombol Buka Berkas untuk
+                                menampilkan dokumen di area ini.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <iframe
+                        id="fileViewer"
+                        class="viewer hidden"
+                        title="Pratinjau Dokumen"
+                        allowfullscreen
+                    ></iframe>
+
+                    <p style="margin-top:12px;font-size:10px">
+                        Catatan: Dokumen harus menggunakan
+                        tautan publik agar dapat ditampilkan.
+                        Excel dan Word menggunakan layanan
+                        Microsoft Office Viewer.
+                    </p>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </main>
+
+</div>
+
+<!-- =================================
+     JAVASCRIPT
+================================= -->
+
+<script>
+
+/* =================================
+   1. KONFIGURASI LINK EKSTERNAL
+================================= */
+
+const CONFIG = {
+
+    // Link Google Forms Recruitment
+    recruitment: "",
+
+    // Link Google Forms Laporan Pelanggaran
+    report: "",
+
+    // Link undangan Server Discord
+    discord: ""
+
+};
+
+
+/* =================================
+   2. KONFIGURASI FILE CLOUD
+================================= */
+
+const FILES = {
+
+    pdf: {
+        name: "Dokumen PDF",
+        url: "",
+        type: "pdf"
+    },
+
+    excel: {
+        name: "Data Excel",
+        url: "",
+        type: "office"
+    },
+
+    word: {
+        name: "Dokumen Word",
+        url: "",
+        type: "office"
+    }
+
+};
+
+
+/* =================================
+   3. NAVIGASI HALAMAN
+================================= */
+
+const menuButtons =
+    document.querySelectorAll(".menu-btn[data-page]");
+
+const pages =
+    document.querySelectorAll(".page");
+
+const topTitle =
+    document.getElementById("topTitle");
+
+const contentScroll =
+    document.querySelector(".content-scroll");
+
+
+function openPage(pageName, button) {
+
+    // Sembunyikan semua halaman
+    pages.forEach(page => {
+        page.classList.remove("active");
+    });
+
+    // Hapus status aktif semua tombol
+    menuButtons.forEach(btn => {
+        btn.classList.remove("active");
+    });
+
+    // Ambil halaman yang dipilih
+    const selectedPage =
+        document.getElementById("page-" + pageName);
+
+    if (!selectedPage) return;
+
+    // Tampilkan halaman
+    selectedPage.classList.add("active");
+
+    // Aktifkan tombol
+    if (button) {
+        button.classList.add("active");
+    }
+
+    // Ubah judul halaman
+    topTitle.textContent =
+        button
+            ? button.textContent.trim()
+            : "Beranda Pusat";
+
+    // Reset scroll konten
+    contentScroll.scrollTop = 0;
+
+}
+
+
+// Event tombol navigasi
+menuButtons.forEach(button => {
+
+    button.addEventListener("click", () => {
+
+        openPage(
+            button.dataset.page,
+            button
+        );
+
+    });
+
+});
+
+
+/* =================================
+   4. LIVE FILTER SEARCH
+================================= */
+
+const menuSearch =
+    document.getElementById("menuSearch");
+
+
+menuSearch.addEventListener("input", function() {
+
+    const keyword =
+        this.value.toLowerCase().trim();
+
+    const groups =
+        document.querySelectorAll(".menu-group");
+
+    groups.forEach(group => {
+
+        const buttons =
+            group.querySelectorAll(".menu-btn");
+
+        const heading =
+            group.querySelector(".menu-title");
+
+        let visibleCount = 0;
+
+        buttons.forEach(button => {
+
+            const text =
+                button.textContent.toLowerCase();
+
+            const match =
+                text.includes(keyword);
+
+            button.style.display =
+                match ? "flex" : "none";
+
+            if (match) {
+                visibleCount++;
+            }
+
+        });
+
+        group.style.display =
+            visibleCount > 0 ? "block" : "none";
+
+        if (heading) {
+            heading.style.display =
+                visibleCount > 0 ? "block" : "none";
         }
 
-        /* HEADER LOGO & INSTANSI */
-        .community-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid var(--border-color);
-            margin-bottom: 15px;
-        }
-        .community-logo {
-            width: 45px;
-            height: 45px;
-            background-color: #1e293b;
-            border-radius: 50%;
-            border: 2px solid var(--accent-blue);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            overflow: hidden;
-        }
-        .community-logo img { width: 100%; height: 100%; object-fit: cover; }
-        .community-info h2 { font-size: 14px; letter-spacing: 0.5px; text-transform: uppercase; color: #fff; line-height: 1.2; }
-        .community-info p { font-size: 11px; color: #38bdf8; font-weight: 600; text-transform: uppercase; }
+    });
 
-        /* KARTU KTP ANGGOTA */
-        .ktp-card {
-            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-            border: 1px dashed #60a5fa;
-            border-radius: 8px;
-            padding: 12px;
-            margin-bottom: 15px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-        }
-        .ktp-title {
-            font-size: 10px;
-            font-weight: bold;
-            color: #94a3b8;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            padding-bottom: 4px;
-            margin-bottom: 8px;
-            text-align: center;
-        }
-        .ktp-body { display: flex; gap: 10px; align-items: center; }
-        .ktp-avatar {
-            width: 50px;
-            height: 50px;
-            background-color: #334155;
-            border-radius: 6px;
-            border: 1px solid var(--border-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 22px;
-            overflow: hidden;
-        }
-        .ktp-avatar img { width: 100%; height: 100%; object-fit: cover; }
-        .ktp-details { font-size: 11px; line-height: 1.4; color: #cbd5e1; }
-        .ktp-details strong { color: #fff; font-size: 12px; }
+});
 
-        /* FITUR CARI TOMBOL */
-        .search-container { margin-bottom: 12px; }
-        .search-input {
-            width: 100%;
-            padding: 8px 12px;
-            background-color: #1e293b;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            color: #fff;
-            font-size: 12px;
-            outline: none;
-        }
-        .search-input::placeholder { color: var(--text-muted); }
-        .search-input:focus { border-color: var(--accent-blue); }
 
-        /* DAFTAR MENU BUTTONS */
-        .menu-scroll {
-            flex-grow: 1;
-            overflow-y: auto;
-            padding-right: 2px;
-        }
-        .menu-scroll::-webkit-scrollbar { width: 4px; }
-        .menu-scroll::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 4px; }
-        
-        .category-title { font-size: 10px; font-weight: 700; text-transform: uppercase; color: #38bdf8; letter-spacing: 0.5px; margin: 12px 0 5px 2px; }
-        .category-title:first-of-type { margin-top: 2px; }
-        
-        .menu-btn {
-            width: 100%;
-            background-color: #1e293b;
-            border: 1px solid var(--border-color);
-            color: #cbd5e1;
-            padding: 9px 12px;
-            text-align: left;
-            font-size: 12px;
-            font-weight: 600;
-            border-radius: 6px;
-            cursor: pointer;
-            margin-bottom: 5px;
-            transition: all 0.2s ease;
-        }
-        .menu-btn:hover, .menu-btn.active {
-            background-color: var(--accent-blue);
-            color: #fff;
-            border-color: #60a5fa;
-            transform: translateX(3px);
-        }
-        .menu-btn.btn-admin-side { border-color: #ef4444; color: #f87171; }
-        .menu-btn.btn-admin-side:hover { background-color: var(--accent-red); color: #fff; }
+/* =================================
+   5. JAM DIGITAL WIB
+================================= */
 
-        .sidebar-footer { padding-top: 10px; border-top: 1px solid var(--border-color); font-size: 11px; color: var(--text-muted); text-align: center; margin-top: 10px; }
+function updateClock() {
 
-        /* LAYAR KANAN: ISI KONTEN UTAMA */
-        .content-area {
-            flex-grow: 1;
-            background-color: var(--content-bg);
-            padding: 30px;
-            overflow-y: auto;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-        }
-        .content-card {
-            background-color: var(--sidebar-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 25px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            display: none;
-            animation: fadeIn 0.3s ease;
-        }
-        .content-card.active { display: block; }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(5px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+    const now = new Date();
 
-        .content-card h1 { font-size: 20px; margin-bottom: 15px; border-left: 4px solid var(--accent-blue); padding-left: 10px; text-transform: uppercase; }
-        .content-card p { font-size: 14px; color: #cbd5e1; line-height: 1.6; margin-bottom: 15px; }
-        
-        /* FORMAT TABEL DATA */
-        .table-roster { width: 100%; border-collapse: collapse; margin-top: 15px; }
-        .table-roster th, .table-roster td { border: 1px solid var(--border-color); padding: 12px; text-align: left; font-size: 13px; }
-        .table-roster th { background-color: #1e293b; color: #fff; }
-        .table-roster td { background-color: #0f172a; }
+    const time = new Intl.DateTimeFormat(
+        "id-ID",
+        {
+            timeZone: "Asia/Jakarta",
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+            hour12: false
+        }
+    ).format(now);
 
-        /* TAMPILAN FITUR FILE EXPLORER */
-        .file-manager-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 15px;
-            margin-top: 15px;
-            margin-bottom: 25px;
-        }
-        .file-item {
-            background-color: var(--folder-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            padding: 15px;
-            text-align: center;
-            transition: all 0.2s ease;
-        }
-        .file-item:hover { border-color: var(--accent-blue); transform: translateY(-2px); }
-        .file-icon { font-size: 32px; margin-bottom: 8px; }
-        .file-name { font-size: 12px; font-weight: 600; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 4px; }
-        .file-size { font-size: 10px; color: var(--text-muted); margin-bottom: 10px; }
-        .file-actions { display: flex; gap: 5px; justify-content: center; }
-        
-        .btn-file-action { padding: 5px 10px; font-size: 11px; font-weight: bold; border-radius: 4px; border: none; cursor: pointer; text-decoration: none; color: #fff; }
-        .btn-preview { background-color: var(--accent-blue); }
-        .btn-preview:hover { background-color: var(--accent-hover); }
+    document.getElementById("digitalClock")
+        .textContent = time + " WIB";
 
-        /* WIDGET FRAME LAYAR PRATINJAU FILE */
-        .preview-frame-container {
-            margin-top: 20px;
-            flex-grow: 1;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            background-color: #090d16;
-            display: flex;
-            flex-direction: column;
-            min-height: 450px;
-        }
-        .frame-header {
-            background-color: #1e293b;
-            padding: 10px 15px;
-            font-size: 12px;
-            font-weight: bold;
-            border-bottom: 1px solid var(--border-color);
-            color: #38bdf8;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .frame-body { flex-grow: 1; width: 100%; height: 100%; border: none; background-color: #fff; border-radius: 0 0 8px 8px; }
+}
 
-        /* POP-UP LOGIN ADMIN */
-        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; z-index: 1000; }
-        .login-box { background-color: #1e293b; border: 1px solid #ef4444; padding: 25px; border-radius: 8px; width: 300px; text-align: center; }
-        .login-box h3 { font-size: 16px; margin-bottom: 15px; color: #fff; }
-        .login-box input { width: 100%; padding: 8px; margin-bottom: 12px; border-radius: 4px; border: 1px solid var(--border-color); background-color: #0f172a; color: #fff; text-align: center; }
-        .login-box button { width: 100%; padding: 8px; background-color: var(--accent-blue); border: none; color: white; font-weight: bold; border-radius: 4px; cursor: pointer; margin-bottom: 8px; }
+updateClock();
+
+setInterval(updateClock, 1000);
+
+
+/* =================================
+   6. EXTERNAL REDIRECT
+================================= */
+
+document.querySelectorAll("[data-external]")
+    .forEach(button => {
+
+        button.addEventListener("click", () => {
+
+            const type =
+                button.dataset.external;
+
+            const url =
+                CONFIG[type];
+
+            if (!url || !url.trim()) {
+
+                alert(
+                    "Link " + type +
+                    " belum diatur. Silakan isi URL " +
+                    "pada bagian CONFIG JavaScript."
+                );
+
+                return;
+            }
+
+            try {
+
+                const destination =
+                    new URL(url);
+
+                if (
+                    destination.protocol !== "https:" &&
+                    destination.protocol !== "http:"
+                ) {
+                    throw new Error("URL tidak valid");
+                }
+
+                window.open(
+                    destination.href,
+                    "_blank",
+                    "noopener,noreferrer"
+                );
+
+            } catch (error) {
+
+                alert(
+                    "URL tidak valid. Periksa kembali konfigurasi."
+                );
+
+            }
+
+        });
+
+    });
+
+
+/* =================================
+   7. FILE CLOUD VIEWER
+================================= */
+
+const fileViewer =
+    document.getElementById("fileViewer");
+
+const viewerEmpty =
+    document.getElementById("viewerEmpty");
+
+
+document.querySelectorAll(".open-file")
+    .forEach(button => {
+
+        button.addEventListener("click", () => {
+
+            const fileKey =
+                button.dataset.file;
+
+            const file =
+                FILES[fileKey];
+
+            if (!file || !file.url.trim()) {
+
+                alert(
+                    "URL " + file.name +
+                    " belum diatur pada konfigurasi FILES."
+                );
+
+                return;
+            }
+
+            let previewUrl = "";
+
+            try {
+
+                const originalUrl =
+                    new URL(file.url);
+
+                if (
+                    originalUrl.protocol !== "https:" &&
+                    originalUrl.protocol !== "http:"
+                ) {
+                    throw new Error("URL tidak valid");
+                }
+
+                if (file.type === "pdf") {
+
+                    // PDF ditampilkan langsung
+                    previewUrl =
+                        originalUrl.href;
+
+                } else if (file.type === "office") {
+
+                    // Excel dan Word melalui Microsoft Viewer
+                    previewUrl =
+                        "https://view.officeapps.live.com/op/embed.aspx?src=" +
+                        encodeURIComponent(originalUrl.href);
+
+                } else {
+
+                    throw new Error("Format tidak didukung");
+
+                }
+
+            } catch (error) {
+
+                alert(
+                    "URL dokumen tidak valid atau format tidak didukung."
+                );
+
+                return;
+            }
+
+            // Tampilkan dokumen pada iframe
+            fileViewer.src = previewUrl;
+
+            viewerEmpty.classList.add("hidden");
+
+            fileViewer.classList.remove("hidden");
+
+            // Arahkan scroll ke pratinjau
+            fileViewer.scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            });
+
+        });
+
+    });
+
+
+/* =================================
+   8. ERROR HANDLING DASAR
+================================= */
+
+// Pastikan halaman awal tersedia
+if (!document.getElementById("page-beranda")) {
+    console.error("Halaman Beranda tidak ditemukan.");
+}
+
+</script>
+
+</body>
+</html>
