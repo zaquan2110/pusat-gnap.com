@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portal Pusat Komunitas + KTP Anggota</title>
+    <title>Portal Pusat Komunitas - Official Template</title>
     <style>
         :root {
             --bg-dark: #020617;
@@ -19,7 +19,7 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
         body { background-color: var(--bg-dark); color: var(--text-light); height: 100vh; overflow: hidden; display: flex; }
 
-        /* LAYAR KIRI: SIDEBAR */
+        /* LAYAR KIRI: SIDEBAR (DAFTAR TOMBOL) */
         .sidebar {
             width: 310px;
             background-color: var(--sidebar-bg);
@@ -28,9 +28,10 @@
             flex-direction: column;
             padding: 15px;
             height: 100%;
+            flex-shrink: 0;
         }
 
-        /* HEADER LOGO & NAMA KOMUNITAS */
+        /* HEADER LOGO & INSTANSI */
         .community-header {
             display: flex;
             align-items: center;
@@ -51,25 +52,11 @@
             font-size: 20px;
             overflow: hidden;
         }
-        .community-logo img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .community-info h2 {
-            font-size: 14px;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-            color: #fff;
-            line-height: 1.2;
-        }
-        .community-info p {
-            font-size: 11px;
-            color: #38bdf8;
-            font-weight: 600;
-        }
+        .community-logo img { width: 100%; height: 100%; object-fit: cover; }
+        .community-info h2 { font-size: 14px; letter-spacing: 0.5px; text-transform: uppercase; color: #fff; line-height: 1.2; }
+        .community-info p { font-size: 11px; color: #38bdf8; font-weight: 600; text-transform: uppercase; }
 
-        /* KARTU KTP ANGGOTA (ID CARD KEDINASAN) */
+        /* KARTU KTP ANGGOTA */
         .ktp-card {
             background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
             border: 1px dashed #60a5fa;
@@ -89,11 +76,7 @@
             margin-bottom: 8px;
             text-align: center;
         }
-        .ktp-body {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
+        .ktp-body { display: flex; gap: 10px; align-items: center; }
         .ktp-avatar {
             width: 50px;
             height: 50px;
@@ -106,22 +89,11 @@
             font-size: 22px;
             overflow: hidden;
         }
-        .ktp-avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .ktp-details {
-            font-size: 11px;
-            line-height: 1.4;
-            color: #cbd5e1;
-        }
-        .ktp-details strong {
-            color: #fff;
-            font-size: 12px;
-        }
+        .ktp-avatar img { width: 100%; height: 100%; object-fit: cover; }
+        .ktp-details { font-size: 11px; line-height: 1.4; color: #cbd5e1; }
+        .ktp-details strong { color: #fff; font-size: 12px; }
 
-        /* SEARCH BAR */
+        /* FITUR CARI */
         .search-container { margin-bottom: 12px; }
         .search-input {
             width: 100%;
@@ -136,7 +108,7 @@
         .search-input::placeholder { color: var(--text-muted); }
         .search-input:focus { border-color: var(--accent-blue); }
 
-        /* LIST TOMBOL MENU */
+        /* SCROLL MENU BUTTONS */
         .menu-scroll {
             flex-grow: 1;
             overflow-y: auto;
@@ -145,14 +117,7 @@
         .menu-scroll::-webkit-scrollbar { width: 4px; }
         .menu-scroll::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 4px; }
         
-        .category-title {
-            font-size: 10px;
-            font-weight: 700;
-            text-transform: uppercase;
-            color: #38bdf8;
-            letter-spacing: 0.5px;
-            margin: 12px 0 5px 2px;
-        }
+        .category-title { font-size: 10px; font-weight: 700; text-transform: uppercase; color: #38bdf8; letter-spacing: 0.5px; margin: 12px 0 5px 2px; }
         .category-title:first-of-type { margin-top: 2px; }
         
         .menu-btn {
@@ -178,16 +143,9 @@
         .menu-btn.btn-admin-side { border-color: #ef4444; color: #f87171; }
         .menu-btn.btn-admin-side:hover { background-color: var(--accent-red); color: #fff; }
 
-        .sidebar-footer {
-            padding-top: 10px;
-            border-top: 1px solid var(--border-color);
-            font-size: 11px;
-            color: var(--text-muted);
-            text-align: center;
-            margin-top: 10px;
-        }
+        .sidebar-footer { padding-top: 10px; border-top: 1px solid var(--border-color); font-size: 11px; color: var(--text-muted); text-align: center; margin-top: 10px; }
 
-        /* LAYAR KANAN: ISI KONTEN */
+        /* LAYAR KANAN: ISI KONTEN UTAMA */
         .content-area {
             flex-grow: 1;
             background-color: var(--content-bg);
@@ -213,12 +171,14 @@
 
         .content-card h1 { font-size: 20px; margin-bottom: 15px; border-left: 4px solid var(--accent-blue); padding-left: 10px; text-transform: uppercase; }
         .content-card p { font-size: 14px; color: #cbd5e1; line-height: 1.6; margin-bottom: 15px; }
+        
+        /* FORMAT TABEL DATA */
         .table-roster { width: 100%; border-collapse: collapse; margin-top: 15px; }
         .table-roster th, .table-roster td { border: 1px solid var(--border-color); padding: 12px; text-align: left; font-size: 13px; }
         .table-roster th { background-color: #1e293b; color: #fff; }
         .table-roster td { background-color: #0f172a; }
 
-        /* Modal Pop-up Admin */
+        /* POP-UP LOGIN ADMIN */
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; z-index: 1000; }
         .login-box { background-color: #1e293b; border: 1px solid #ef4444; padding: 25px; border-radius: 8px; width: 300px; text-align: center; }
         .login-box h3 { font-size: 16px; margin-bottom: 15px; }
@@ -229,12 +189,11 @@
 </head>
 <body>
 
-    <!-- LAYAR KIRI: SIDEBAR -->
+    <!-- LAYAR KIRI -->
     <div class="sidebar">
-        <!-- LOGO DAN NAMA INSTANSI DI ATAS -->
+        <!-- LOGO & INSTANSI -->
         <div class="community-header">
             <div class="community-logo">
-                <!-- Ganti link src di bawah ini dengan URL logo komunitas kamu nanti -->
                 <img src="https://placeholder.com" alt="Logo">
             </div>
             <div class="community-info">
@@ -243,12 +202,11 @@
             </div>
         </div>
 
-        <!-- KARTU KTP ANGGOTA (IDENTITY CARD) -->
+        <!-- KTP ANGGOTA -->
         <div class="ktp-card">
-            <div class="ktp-title">KTP Anggota Komunitas</div>
+            <div class="ktp-title">KTP ANGGOTA INSTANSI</div>
             <div class="ktp-body">
                 <div class="ktp-avatar">
-                    <!-- Ganti link src di bawah ini dengan foto profil avatar Roblox/Discord kamu -->
                     <img src="https://placeholder.com" alt="Avatar">
                 </div>
                 <div class="ktp-details">
@@ -260,14 +218,23 @@
             </div>
         </div>
         
-        <!-- KOLOM CARI -->
+        <!-- CARI TOMBOL -->
         <div class="search-container">
             <input type="text" class="search-input" id="sidebarSearch" onkeyup="searchMenu()" placeholder="🔍 Cari menu tombol...">
         </div>
         
-        <!-- DAFTAR TOMBOL BERKATEGORI -->
+        <!-- DAFTAR MENU -->
         <div class="menu-scroll" id="menuList">
             <div class="category-title">Utama</div>
             <button class="menu-btn active" onclick="switchTab('beranda', this)">🏠 Beranda Pusat</button>
             
             <div class="category-title">Data Personel</div>
+            <button class="menu-btn" onclick="switchTab('roster', this)">👥 Roster Anggota</button>
+            <button class="menu-btn" onclick="switchTab('blacklist', this)">🚫 Daftar Blacklist</button>
+            
+            <div class="category-title">Legalitas & Arsip</div>
+            <button class="menu-btn" onclick="switchTab('aturan', this)">📜 Undang-Undang / SOP</button>
+            <button class="menu-btn" onclick="switchTab('arsip', this)">📂 Arsip Surat SK</button>
+            
+            <div class="category-title">Pelayanan Publik</div>
+            <button class="menu-btn" onclick="openExternal('recruitment')">📩 Formulir Recruitment</button>
