@@ -523,7 +523,7 @@ body {
 .home-notification-item p { margin-top:4px; color:#8fa1bb; font-size:9px; line-height:1.7; }
 .home-notification-foot { margin-top:10px; padding-top:9px; border-top:1px solid var(--border); color:#7286a3; font-size:8px; line-height:1.6; }
 
-@media(max-width:850px) { .home-hero-emblem { min-width:120px; } .home-emblem-ring { width:105px;height:105px; } .home-service-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+.feature-panel{padding:22px;margin:0;max-width:100%;}.feature-description{color:#9aabc2;font-size:12px;line-height:1.8;margin-top:12px;}.feature-actions{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap;}.feature-empty{margin-top:18px;padding:28px 16px;border:1px dashed var(--border);border-radius:10px;text-align:center;color:#9aabc2;font-size:11px;}.feature-empty strong{color:#dce5f4;}.feature-empty p{margin-top:7px;}.page-heading{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;}.page-heading h2{font-size:23px;color:#edf2fa;margin:5px 0;}.page-heading p{font-size:11px;color:#91a2bb;}.generator-fields{display:grid;gap:12px;margin-top:16px;max-width:760px;}.generator-fields label{display:grid;gap:6px;color:#aebbd0;font-size:11px;}.generator-fields input,.generator-fields textarea,.generator-fields select{width:100%;padding:11px;border:1px solid var(--border);border-radius:7px;background:#101f35;color:#e8eef8;font:inherit;font-size:12px;}.generator-fields textarea{resize:vertical;}.generator-fields button{justify-self:start;}.@media(max-width:850px) { .home-hero-emblem { min-width:120px; } .home-emblem-ring { width:105px;height:105px; } .home-service-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
 @media(max-width:620px) { .home-hero { padding:23px 20px 42px; } .home-hero-emblem { display:none; } .home-lower-grid { grid-template-columns:1fr; } .home-section-hint { display:none; } }
 .dashboard-overview {
     display: grid;
@@ -1687,7 +1687,24 @@ tbody tr:last-child td {
 
             </div>
 
-        </nav>
+        
+            <div class="menu-group">
+                <div class="menu-title">ORGANISASI</div>
+                <button class="menu-btn" data-page="struktur"><span class="menu-icon">⌘</span> Struktur Jabatan</button>
+                <button class="menu-btn" data-page="idcard"><span class="menu-icon">▣</span> Kartu Identitas</button>
+                <button class="menu-btn" data-page="awards"><span class="menu-icon">★</span> Penghargaan Anggota</button>
+            </div>
+            <div class="menu-group">
+                <div class="menu-title">PUSAT KEGIATAN</div>
+                <button class="menu-btn" data-page="agenda"><span class="menu-icon">▦</span> Agenda GNAP</button>
+                <button class="menu-btn" data-page="notifications"><span class="menu-icon">♢</span> Pusat Notifikasi</button>
+                <button class="menu-btn" data-page="statistics"><span class="menu-icon">▥</span> Statistik GNAP</button>
+            </div>
+            <div class="menu-group">
+                <div class="menu-title">ADMINISTRASI</div>
+                <button class="menu-btn" data-page="generator"><span class="menu-icon">✎</span> Generator Surat</button>
+            </div>
+</nav>
 
         <!-- JAM DIGITAL -->
 
@@ -2071,6 +2088,35 @@ tbody tr:last-child td {
                  CLOUD STORAGE
             ================================== -->
 
+
+            <section class="page" id="page-struktur">
+                <div class="page-heading"><div><span class="home-section-kicker">ORGANISASI</span><h2>Struktur Jabatan</h2><p>Susunan jabatan dan unit kerja GNAP.</p></div></div>
+                <div class="panel feature-panel"><div class="panel-title">Struktur Organisasi</div><p class="feature-description">Data struktur organisasi akan dikelola melalui Dashboard Admin agar perubahan jabatan tetap terverifikasi.</p><div class="feature-actions"><button class="home-primary-action" data-page="roster" type="button">LIHAT ROSTER PERSONEL ↗</button></div></div>
+            </section>
+            <section class="page" id="page-idcard">
+                <div class="page-heading"><div><span class="home-section-kicker">IDENTITAS</span><h2>Kartu Identitas Anggota</h2><p>Pusat akses identitas dan profil personel.</p></div></div>
+                <div class="panel feature-panel"><div class="panel-title">Cari Identitas Anggota</div><p class="feature-description">Gunakan roster untuk memilih anggota. Kartu identitas digital akan ditampilkan setelah data profil terhubung.</p><div class="feature-actions"><button class="home-primary-action" data-page="roster" type="button">BUKA ROSTER ↗</button></div></div>
+            </section>
+            <section class="page" id="page-awards">
+                <div class="page-heading"><div><span class="home-section-kicker">APRESIASI</span><h2>Penghargaan Anggota</h2><p>Dokumentasi prestasi dan apresiasi personel.</p></div></div>
+                <div class="panel feature-panel"><div class="panel-title">Daftar Penghargaan</div><div class="feature-empty"><strong>Belum ada penghargaan dipublikasikan</strong><p>Data penghargaan akan muncul setelah diterbitkan oleh pengelola GNAP.</p></div></div>
+            </section>
+            <section class="page" id="page-agenda">
+                <div class="page-heading"><div><span class="home-section-kicker">KEGIATAN</span><h2>Agenda GNAP</h2><p>Kalender kegiatan dan jadwal resmi komunitas.</p></div></div>
+                <div class="panel feature-panel"><div class="panel-title">Kalender Kegiatan</div><p class="feature-description">Lihat kalender di Beranda untuk saat ini. Daftar agenda terjadwal akan ditampilkan setelah modul agenda di Dashboard Admin diaktifkan.</p><div class="feature-actions"><button class="home-primary-action" data-page="beranda" type="button">KEMBALI KE BERANDA ↗</button></div></div>
+            </section>
+            <section class="page" id="page-notifications">
+                <div class="page-heading"><div><span class="home-section-kicker">INFORMASI</span><h2>Pusat Notifikasi</h2><p>Pengumuman dan pemberitahuan resmi GNAP.</p></div></div>
+                <div class="panel feature-panel"><div class="panel-title">Informasi Terbaru</div><div id="allNotificationList"><p class="feature-description">Notifikasi akan mengikuti pengumuman resmi yang diterbitkan.</p></div><div class="feature-actions"><button class="home-primary-action" data-page="beranda" type="button">LIHAT PENGUMUMAN ↗</button></div></div>
+            </section>
+            <section class="page" id="page-statistics">
+                <div class="page-heading"><div><span class="home-section-kicker">DATA & ANALISIS</span><h2>Statistik GNAP</h2><p>Ringkasan data portal dan administrasi.</p></div></div>
+                <div class="dashboard-overview"><article class="dashboard-stat"><span class="dashboard-stat-label">TOTAL PERSONEL</span><strong id="statisticsMemberCount">0</strong><small>Data roster</small></article><article class="dashboard-stat"><span class="dashboard-stat-label">DOKUMEN</span><strong id="statisticsDocumentCount">0</strong><small>Arsip portal</small></article><article class="dashboard-stat"><span class="dashboard-stat-label">PENGUMUMAN</span><strong id="statisticsAnnouncementCount">0</strong><small>Informasi aktif</small></article></div>
+            </section>
+            <section class="page" id="page-generator">
+                <div class="page-heading"><div><span class="home-section-kicker">ADMINISTRASI</span><h2>Generator Surat</h2><p>Buat draf surat administrasi GNAP.</p></div></div>
+                <div class="panel feature-panel"><div class="panel-title">Pembuat Draf Surat</div><div class="generator-fields"><label>Jenis surat<select id="letterType"><option>Surat Usulan</option><option>Surat Keputusan</option><option>Surat Edaran</option><option>Surat Tugas</option></select></label><label>Nomor surat<input id="letterNumber" placeholder="Contoh: 001/MABES-GNAP/XI/2026"></label><label>Perihal<input id="letterSubject" placeholder="Masukkan perihal surat"></label><label>Isi surat<textarea id="letterBody" rows="5" placeholder="Tuliskan isi surat..."></textarea></label><button class="home-primary-action" id="generateLetter" type="button">BUAT DRAF SURAT</button><textarea id="letterOutput" rows="12" readonly placeholder="Hasil draf surat akan muncul di sini"></textarea><button class="menu-btn" id="copyLetter" type="button">SALIN DRAF SURAT</button></div></div>
+            </section>
             <section class="page" id="page-cloud">
   <h1 class="page-title">Berkas & File Cloud</h1>
   <p class="page-description">Pusat penyimpanan dokumen administrasi. Pilih jenis file untuk melihat daftar dokumen yang tersedia.</p>
@@ -2306,6 +2352,19 @@ function openPage(pageName, button) {
 }
 
 
+document.querySelectorAll('.page [data-page]').forEach(button=>button.addEventListener('click',()=>{const target=Array.from(menuButtons).find(item=>item.dataset.page===button.dataset.page);if(target)openPage(button.dataset.page,target);}));
+document.getElementById("generateLetter")?.addEventListener("click",()=>{
+ const type=document.getElementById("letterType").value;
+ const number=document.getElementById("letterNumber").value.trim()||"Nomor: [Isi nomor surat]";
+ const subject=document.getElementById("letterSubject").value.trim()||"[Perihal surat]";
+ const body=document.getElementById("letterBody").value.trim()||"[Isi surat]";
+ document.getElementById("letterOutput").value="GARDA NUSANTARA • ADHIRAJASA PRESISI\n"+type.toUpperCase()+"\n"+number+"\n\nPerihal: "+subject+"\n\n"+body+"\n\nDitetapkan di: [Tempat]\nTanggal: [Tanggal]\n\nPimpinan GNAP,\n\n[Nama & Jabatan]";
+});
+document.getElementById("copyLetter")?.addEventListener("click",async()=>{
+ const output=document.getElementById("letterOutput");
+ if(!output.value.trim()){alert("Buat draf surat terlebih dahulu.");return;}
+ try{await navigator.clipboard.writeText(output.value);alert("Draf surat berhasil disalin.");}catch(e){output.select();document.execCommand("copy");alert("Draf surat disalin.");}
+});
 // Event tombol navigasi
 menuButtons.forEach(button => {
 
