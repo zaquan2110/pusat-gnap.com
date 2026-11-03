@@ -1041,6 +1041,11 @@ tbody tr:last-child td {
     font-weight: 800;
     cursor: pointer;
 }
+.document-preview-toolbar button.copy-success {
+    border-color: rgba(56,189,128,.7);
+    background: #145b45;
+    color: #eafff5;
+}
 .document-preview-body {
     min-height: 335px;
     max-height: 760px;
@@ -2548,6 +2553,46 @@ function openInlineDocument(libraryKey, file) {
     const actions = document.createElement("div");
     actions.style.display = "flex";
     actions.style.gap = "7px";
+    if (file.content || file.kind === "txt") {
+        const copyText = document.createElement("button");
+        copyText.type = "button";
+        copyText.textContent = "SALIN TEKS";
+        copyText.title = "Salin seluruh isi dokumen teks";
+        copyText.addEventListener("click", async () => {
+            const paper = previewHost.querySelector(".document-paper");
+            const textToCopy = paper ? paper.innerText.trim() : "";
+            if (!textToCopy) {
+                copyText.textContent = "TEKS KOSONG";
+                return;
+            }
+            try {
+                if (navigator.clipboard && window.isSecureContext) {
+                    await navigator.clipboard.writeText(textToCopy);
+                } else {
+                    const temp = document.createElement("textarea");
+                    temp.value = textToCopy;
+                    temp.setAttribute("readonly", "");
+                    temp.style.position = "fixed";
+                    temp.style.opacity = "0";
+                    document.body.appendChild(temp);
+                    temp.select();
+                    const copied = document.execCommand("copy");
+                    temp.remove();
+                    if (!copied) throw new Error("Clipboard tidak tersedia");
+                }
+                copyText.textContent = "TEKS BERHASIL DISALIN";
+                copyText.classList.add("copy-success");
+                setTimeout(() => {
+                    copyText.textContent = "SALIN TEKS";
+                    copyText.classList.remove("copy-success");
+                }, 2200);
+            } catch (error) {
+                copyText.textContent = "GAGAL MENYALIN";
+                setTimeout(() => { copyText.textContent = "SALIN TEKS"; }, 2200);
+            }
+        });
+        actions.appendChild(copyText);
+    }
     if (file.url) {
         const download = document.createElement("a");
         download.href = file.url;
