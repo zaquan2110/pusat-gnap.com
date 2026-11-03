@@ -587,6 +587,90 @@ body {
 }
 
 /* =================================
+   FORMULIR PELAYANAN PUBLIK
+================================= */
+.service-form {
+    display: grid;
+    gap: 13px;
+}
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2,minmax(0,1fr));
+    gap: 13px;
+}
+.form-field {
+    display: grid;
+    gap: 7px;
+}
+.form-field.full {
+    grid-column: 1 / -1;
+}
+.form-field label {
+    color: #dce5f4;
+    font-size: 11px;
+    font-weight: 700;
+}
+.form-field input,
+.form-field textarea,
+.form-field select {
+    width: 100%;
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    padding: 11px 12px;
+    background: #0d1930;
+    color: var(--text);
+    font: inherit;
+    font-size: 12px;
+}
+.form-field textarea {
+    min-height: 115px;
+    resize: vertical;
+}
+.form-help {
+    color: var(--muted);
+    font-size: 10px;
+    line-height: 1.7;
+}
+.form-submit {
+    border: 0;
+    border-radius: 7px;
+    padding: 12px 18px;
+    background: #285da3;
+    color: white;
+    font-weight: 800;
+    font-size: 11px;
+    cursor: pointer;
+}
+.form-submit:disabled {
+    opacity: .6;
+    cursor: wait;
+}
+.form-status {
+    display: none;
+    border-radius: 7px;
+    padding: 11px 12px;
+    font-size: 11px;
+    line-height: 1.6;
+}
+.form-status.show {
+    display: block;
+}
+.form-status.success {
+    color: #a7f0c5;
+    background: rgba(53,160,103,.12);
+    border: 1px solid rgba(53,160,103,.3);
+}
+.form-status.error {
+    color: #ffb8bd;
+    background: rgba(220,53,69,.12);
+    border: 1px solid rgba(220,53,69,.3);
+}
+@media (max-width: 650px) {
+    .form-grid { grid-template-columns: 1fr; }
+    .form-field.full { grid-column: auto; }
+}
+
+/* =================================
    TABEL
 ================================= */
 
@@ -1140,12 +1224,12 @@ tbody tr:last-child td {
 
                 <div class="menu-title">PELAYANAN PUBLIK</div>
 
-                <button class="menu-btn" data-external="recruitment">
+                <button class="menu-btn" data-page="recruitment">
                     <span class="menu-icon">✚</span>
                     Formulir Recruitment
                 </button>
 
-                <button class="menu-btn" data-external="report">
+                <button class="menu-btn" data-page="report">
                     <span class="menu-icon">⚑</span>
                     Laporan Pelanggaran
                 </button>
@@ -1611,6 +1695,85 @@ tbody tr:last-child td {
             </section>
 
             <!-- =================================
+                 FORMULIR RECRUITMENT
+            ================================== -->
+            <section class="page" id="page-recruitment">
+                <h1 class="page-title">Formulir Recruitment</h1>
+                <p class="page-description">Pendaftaran calon anggota baru Portal Pusat GNAP. Isi data dengan benar agar dapat diverifikasi oleh petugas.</p>
+                <div class="panel">
+                    <div class="panel-title">FORMULIR PENDAFTARAN ANGGOTA</div>
+                    <form id="recruitmentForm" class="service-form">
+                        <div class="form-grid">
+                            <div class="form-field">
+                                <label for="recRoblox">Nama pengguna Roblox *</label>
+                                <input id="recRoblox" name="roblox_username" maxlength="40" required autocomplete="off" placeholder="Contoh: NamaRoblox">
+                            </div>
+                            <div class="form-field">
+                                <label for="recDiscord">Username Discord *</label>
+                                <input id="recDiscord" name="discord_username" maxlength="60" required autocomplete="off" placeholder="Username Discord">
+                            </div>
+                            <div class="form-field full">
+                                <label for="recReason">Alasan ingin bergabung *</label>
+                                <textarea id="recReason" name="reason" maxlength="2000" required placeholder="Jelaskan alasan dan motivasi kamu..."></textarea>
+                            </div>
+                            <div class="form-field full">
+                                <label for="recExperience">Pengalaman / kemampuan (opsional)</label>
+                                <textarea id="recExperience" name="experience" maxlength="2000" placeholder="Pengalaman organisasi, roleplay, atau kemampuan yang relevan..."></textarea>
+                            </div>
+                        </div>
+                        <p class="form-help">Dengan mengirim formulir, kamu menyatakan data yang diberikan benar dan bersedia dihubungi petugas melalui Discord.</p>
+                        <button class="form-submit" type="submit">KIRIM PENDAFTARAN</button>
+                        <div id="recruitmentStatus" class="form-status" role="status" aria-live="polite"></div>
+                    </form>
+                </div>
+            </section>
+
+            <!-- =================================
+                 FORMULIR LAPORAN PELANGGARAN
+            ================================== -->
+            <section class="page" id="page-report">
+                <h1 class="page-title">Laporan Pelanggaran</h1>
+                <p class="page-description">Sampaikan laporan terkait dugaan pelanggaran aturan komunitas. Laporan hanya dapat ditinjau oleh petugas berwenang melalui Dashboard Admin.</p>
+                <div class="panel">
+                    <div class="panel-title">FORMULIR PENGADUAN</div>
+                    <form id="reportForm" class="service-form">
+                        <div class="form-grid">
+                            <div class="form-field">
+                                <label for="repName">Nama / username pelapor (opsional)</label>
+                                <input id="repName" name="reporter_name" maxlength="80" autocomplete="off" placeholder="Boleh dikosongkan">
+                            </div>
+                            <div class="form-field">
+                                <label for="repTarget">Nama / username terlapor *</label>
+                                <input id="repTarget" name="reported_user" maxlength="80" required autocomplete="off" placeholder="Nama akun terlapor">
+                            </div>
+                            <div class="form-field">
+                                <label for="repCategory">Kategori laporan *</label>
+                                <select id="repCategory" name="category" required>
+                                    <option value="">Pilih kategori</option>
+                                    <option>Abuse of Power</option>
+                                    <option>Pelanggaran SOP</option>
+                                    <option>Penyalahgunaan Jabatan</option>
+                                    <option>Perilaku Tidak Pantas</option>
+                                    <option>Lainnya</option>
+                                </select>
+                            </div>
+                            <div class="form-field">
+                                <label for="repEvidence">Link bukti (opsional)</label>
+                                <input id="repEvidence" name="evidence_url" type="url" maxlength="500" placeholder="https://...">
+                            </div>
+                            <div class="form-field full">
+                                <label for="repDetails">Kronologi / detail kejadian *</label>
+                                <textarea id="repDetails" name="details" maxlength="4000" required placeholder="Tuliskan waktu, tempat, dan kronologi kejadian secara jelas..."></textarea>
+                            </div>
+                        </div>
+                        <p class="form-help">Berikan informasi faktual. Hindari mengirim kata sandi, data pribadi sensitif, atau tautan bukti yang tidak dapat diakses petugas.</p>
+                        <button class="form-submit" type="submit">KIRIM LAPORAN</button>
+                        <div id="reportStatus" class="form-status" role="status" aria-live="polite"></div>
+                    </form>
+                </div>
+            </section>
+
+            <!-- =================================
                  CLOUD STORAGE
             ================================== -->
 
@@ -1813,7 +1976,7 @@ const CONFIG = {
     report: "",
 
     // Link undangan Server Discord
-    discord: ""
+    discord: "https://discord.gg/KMAHFUNtY"
 
 };
 
@@ -2055,6 +2218,60 @@ document.querySelectorAll("[data-external]")
         });
 
     });
+
+
+/* =================================
+   7. PENGIRIMAN FORMULIR KE SUPABASE
+================================= */
+
+function setFormStatus(element, message, type) {
+    element.textContent = message;
+    element.className = "form-status show " + type;
+}
+
+async function submitPortalForm(form, table, statusId, fieldNames, successMessage) {
+    const status = document.getElementById(statusId);
+    const submit = form.querySelector('button[type="submit"]');
+    const values = Object.fromEntries(new FormData(form).entries());
+
+    submit.disabled = true;
+    submit.textContent = "MENGIRIM...";
+    status.className = "form-status";
+    try {
+        const { error } = await supabaseClient.from(table).insert([values]);
+        if (error) throw error;
+        form.reset();
+        setFormStatus(status, successMessage, "success");
+    } catch (error) {
+        console.error("Pengiriman formulir gagal:", error);
+        setFormStatus(status, "Belum berhasil dikirim. Periksa koneksi atau coba lagi. Jika masalah berlanjut, hubungi petugas melalui Discord.", "error");
+    } finally {
+        submit.disabled = false;
+        submit.textContent = table === "recruitment_applications" ? "KIRIM PENDAFTARAN" : "KIRIM LAPORAN";
+    }
+}
+
+document.getElementById("recruitmentForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+    submitPortalForm(
+        this,
+        "recruitment_applications",
+        "recruitmentStatus",
+        [],
+        "Pendaftaran berhasil dikirim. Silakan tunggu petugas menghubungi melalui Discord."
+    );
+});
+
+document.getElementById("reportForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+    submitPortalForm(
+        this,
+        "violation_reports",
+        "reportStatus",
+        [],
+        "Laporan berhasil dikirim dan akan ditinjau oleh petugas berwenang."
+    );
+});
 
 
 /* =================================
