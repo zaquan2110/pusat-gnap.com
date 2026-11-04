@@ -2320,7 +2320,7 @@ function openPage(pageName, button) {
             : "Beranda Pusat";
 
     // Reset scroll konten
-    contentScroll.scrollTop = 0;
+    if (contentScroll) contentScroll.scrollTop = 0;
 
 }
 
@@ -2372,7 +2372,7 @@ function initMemberIdentityCard(){
  document.getElementById("showMemberCard")?.addEventListener("click",show);
  document.getElementById("printMemberCard")?.addEventListener("click",()=>{if(document.getElementById("memberCardName").textContent==="PILIH PERSONEL"){alert("Tampilkan kartu personel terlebih dahulu.");return;}window.print();});
 }
-initMemberIdentityCard();
+// initMemberIdentityCard disabled: live database fills the member card now.
 
 // Event tombol navigasi
 menuButtons.forEach(button => {
@@ -2411,7 +2411,7 @@ const menuSearch =
     document.getElementById("menuSearch");
 
 
-menuSearch.addEventListener("input", function() {
+menuSearch?.addEventListener("input", function() {
 
     const keyword =
         this.value.toLowerCase().trim();
@@ -2993,6 +2993,13 @@ async function loadGNAPPublicContent(){const {data,error}=await supabaseClient.f
    8. ERROR HANDLING DASAR
 ================================= */
 
+// Delegasi navigasi aman untuk menu portal.
+document.getElementById("menuList")?.addEventListener("click", event => {
+ const button=event.target.closest(".menu-btn[data-page]");
+ if(!button)return;
+ event.preventDefault();
+ openPage(button.dataset.page,button);
+});
 // Muat pengumuman dari database Supabase
 
 let calendarCursor = new Date();
